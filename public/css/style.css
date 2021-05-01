@@ -1,0 +1,13 @@
+a {
+    color: inherit;
+    text-decoration: inherit;
+}
+
+.icon {
+    width: 2rem;
+    height: 2rem;
+}
+.icon-sm {
+    width: 1rem;
+    height: 1rem;
+}

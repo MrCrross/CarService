@@ -1,0 +1,8 @@
+https://app.diagrams.net/#G1oYXP24wNnUiuHoTQgFwIg4AJ8Oca8b2V - база данных
+https://wireframe.cc/TdEKeG - вход
+https://wireframe.cc/BSJFcI - заказ
+https://wireframe.cc/bJ2Oyx - клиенты
+https://wireframe.cc/jpP1jx - сотрудники
+https://wireframe.cc/cvK5vB - изменение должности
+https://wireframe.cc/0xLoUA - изменение автомобиля
+https://wireframe.cc/aUotJd - пользователи
