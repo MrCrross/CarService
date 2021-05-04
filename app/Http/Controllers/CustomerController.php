@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CustomerPostRequest;
 use App\Models\Car;
+use App\Models\CarFirm;
 use App\Models\Customer;
 use App\Models\CarModel;
 use Illuminate\Database\QueryException;
@@ -17,8 +18,8 @@ class CustomerController extends Controller
      */
     function __construct()
     {
-        $this->middleware('permission:customer-list', ['only' => ['index']]);
-        $this->middleware('permission:customer-create', ['only' => ['index','create']]);
+        $this->middleware('permission:customer-list', ['only' => ['index','getCar']]);
+        $this->middleware('permission:customer-create', ['only' => ['index','create','jsonCreate']]);
         $this->middleware('permission:customer-edit', ['only' => ['index','update']]);
         $this->middleware('permission:customer-delete', ['only' => ['index','destroy']]);
     }
@@ -90,9 +91,69 @@ class CustomerController extends Controller
         return view('customers.index',['customers' => $customers,'models'=>$models,'success'=>'Данные добавлены успешно!']);
     }
 
+    /**
+     * @param $data
+     */
     private function createCar($data)
     {
         Car::create($data);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public  function getCar(Request $request){
+        $cars = Customer::where('id',$request->id)->with('cars.model.firm')->get();
+        return response()->json($cars);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public  function jsonCreate(Request $request){
+        $customer = Customer::create([
+            'first_name'=>$request->first_name,
+            'last_name'=>$request->last_name,
+            'father_name'=>$request->father_name,
+            'phone'=>$request->phone
+        ]);
+        if(isset($request->model_id)){
+            $this->createCar([
+                'model_id' => $request->model_id,
+                'customer_id' => $customer->id,
+                'state_number' => $request->state
+            ]);
+        };
+        if(isset($request->firm_id)){
+           $model= CarModel::create([
+                'firm_id'=>$request->firm_id,
+                'name'=>$request->model_name,
+                'year_release'=>$request->model_year
+            ]);
+            $this->createCar([
+                'model_id' => $model->id,
+                'customer_id' => $customer->id,
+                'state_number' => $request->state
+            ]);
+        };
+        if(isset($request->firm_name)){
+            $firm =CarFirm::create([
+                'name'=>$request->firm_name
+            ]);
+            $model= CarModel::create([
+                'firm_id'=>$firm->id,
+                'name'=>$request->model_name,
+                'year_release'=>$request->model_year
+            ]);
+            $this->createCar([
+                'model_id' => $model->id,
+                'customer_id' => $customer->id,
+                'state_number' => $request->state
+            ]);
+        };
+        return response()->json('Пользователь добавлен');
     }
 
     /**
@@ -101,11 +162,11 @@ class CustomerController extends Controller
      */
     public function destroy(Request $request){
         try{
-            Customer::with('cars')->where('customers.id',$request->id)->delete();
+            Customer::where('id',$request->id)->delete();
         }catch(QueryException $e){
             $customers = Customer::with('cars.model.firm')->get();
             $models= CarModel::with('firm')->get();
-            return view('customers.index',['customers' => $customers,'models'=>$models,'error'=>'Ошибка занесения в базу новых данных']);
+            return view('customers.index',['customers' => $customers,'models'=>$models,'error'=>'Ошибка удаления данных']);
         }
         $customers = Customer::with('cars.model.firm')->get();
         $models= CarModel::with('firm')->get();

@@ -10,6 +10,8 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\WorkerController;
 use App\Http\Controllers\WorkController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\MaterialController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -28,7 +30,19 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::group(['middleware' => ['auth']], function() {
-    Route::get('/', [OrderController::class, 'index'])->name('orders.index');
+    Route::get('/',function (){
+        return view('welcome');
+    });
+    Route::group(['middleware'=>['permission:order-list']],function(){
+        Route::get('orders', [OrderController::class, 'index'])->name('orders.index');
+        Route::post('orders', [OrderController::class, 'create']);
+
+        Route::post('orders/cars', [CustomerController::class, 'getCar']);
+        Route::post('customer/create', [CustomerController::class, 'jsonCreate']);
+        Route::post('orders/workers', [WorkController::class, 'getWorker']);
+
+        Route::post('materials', [MaterialController::class, 'create']);
+    });
 
     Route::group(['middleware'=>['permission:customer-list']],function(){
         Route::get('customers', [CustomerController::class,'index'])->name('customers.index');
@@ -53,15 +67,15 @@ Route::group(['middleware' => ['auth']], function() {
 
         Route::group(['middleware'=>['permission:work-list']],function(){
             Route::get('works', [WorkController::class,'index'])->name('workers.works');
-            Route::post('posts', [WorkController::class,'createPost']);
             Route::post('works-posts', [WorkController::class,'createWorkPost']);
             Route::patch('works-posts', [WorkController::class,'updateWorkPost']);
             Route::post('works', [WorkController::class,'create']);
             Route::patch('works', [WorkController::class,'update']);
-            Route::delete('posts', [WorkController::class,'destroy']);
-            Route::delete('works', [WorkController::class,'destroyWork']);
-        });
+            Route::delete('works', [WorkController::class,'destroy']);
 
+            Route::post('posts', [PostController::class,'create']);
+            Route::delete('posts', [PostController::class,'destroy']);
+        });
     });
 
     Route::resource('roles', RoleController::class);

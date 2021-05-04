@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCarsToTable extends Migration
+class CreateOrderCompositionsToTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,20 +13,28 @@ class CreateCarsToTable extends Migration
      */
     public function up()
     {
-        Schema::create('cars', function (Blueprint $table) {
+        Schema::create('order_compositions', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('model_id')->unsigned();
-            $table->foreign('model_id')
+            $table->bigInteger('order_id')->unsigned();
+            $table->foreign('order_id')
                 ->references('id')
-                ->on('car_models')
+                ->on('orders')
+                ->onDelete('cascade');
+            $table->bigInteger('worker_id')->unsigned();
+            $table->foreign('worker_id')
+                ->references('id')
+                ->on('workers')
+                ->onDelete('cascade');
+            $table->bigInteger('work_id')->unsigned();
+            $table->foreign('work_id')
+                ->references('id')
+                ->on('works')
                 ->onDelete('cascade');
             $table->bigInteger('customer_id')->unsigned();
             $table->foreign('customer_id')
                 ->references('id')
                 ->on('customers')
                 ->onDelete('cascade');
-            $table->string('state_number',8)->unique();
-
             $table->timestamps();
         });
     }
@@ -38,6 +46,6 @@ class CreateCarsToTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cars');
+        Schema::dropIfExists('order_compositions_to');
     }
 }

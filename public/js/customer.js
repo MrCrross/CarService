@@ -8,7 +8,8 @@ function deleteHandler(item) {
     const last_name = item.parentNode.parentNode.querySelector('input[name="last_name"]')
     const father_name = item.parentNode.parentNode.querySelector('input[name="father_name"]')
     const label = delForm.querySelector('label')
-    const input = delForm.querySelector('#delete-id')
+    const input = delForm.querySelector('input[name="id"]')
+    console.log(id.value)
     input.value = id.value
     label.innerHTML = 'Вы действительно хотите удалить клиента ' + first_name.value + ' ' + last_name.value + ' ' + father_name.value + '?'
 }

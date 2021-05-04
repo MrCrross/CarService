@@ -8,7 +8,7 @@ function deleteHandler(item) {
     const customer = item.parentNode.parentNode.parentNode.querySelector('select[name="customer"]').parentNode.parentNode.querySelector('span')
     const state = item.parentNode.parentNode.parentNode.querySelector('input[name="state"]').parentNode.parentNode.querySelector('span')
     const label = delForm.querySelector('label')
-    const input = delForm.querySelector('#delete-id')
+    const input = delForm.querySelector('input[name="id"]')
     input.value = id.value
     console.log(model)
     label.innerHTML = 'Вы действительно хотите удалить автомобиль ' + model.innerHTML + ' у клиента ' + customer.innerHTML + ' с госномером ' + state.innerHTML + '?'

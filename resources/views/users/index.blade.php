@@ -4,10 +4,10 @@
 @section('content')
 <div class="row">
     <div class="col-lg-12 margin-tb">
-        <div class="pull-left">
+        <div class="float-start">
             <h2>Управление пользователями</h2>
         </div>
-        <div class="pull-right">
+        <div class="float-end">
             <a class="btn btn-success" href="{{ route('users.create') }}">Создать пользователя</a>
         </div>
     </div>

@@ -17,7 +17,9 @@ class CreateCarModelsToTable extends Migration
             $table->id();
             $table->bigInteger('firm_id')->unsigned();
             $table->foreign('firm_id')
-                ->references('id')->on('car_firms');
+                ->references('id')
+                ->on('car_firms')
+                ->onDelete('CASCADE');
             $table->string('name');
             $table->year('year_release');
             $table->timestamps();

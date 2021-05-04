@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\Work;
-use App\Models\Worker;
 use App\Models\WorkHasPost;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -16,28 +15,16 @@ class WorkController extends Controller
      */
     function __construct()
     {
+        $this->middleware('permission:work-list', ['only' => ['index']]);
         $this->middleware('permission:work-create', ['only' => ['create']]);
         $this->middleware('permission:work-edit', ['only' => ['update','updateWorkPost','index']]);
-        $this->middleware('permission:post-create', ['only' => ['createPost']]);
+        $this->middleware('permission:work-delete', ['only' => ['destroy']]);
     }
 
     public function index(Request $request){
         $posts = Post::with('works.work')->get()->toArray();
         $works = Work::all();
         return view('workers.works', ['posts' => $posts,'works'=>$works]);
-    }
-    /**
-     * @param Request $request
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
-    public function createPost(Request $request)
-    {
-        try{
-            Post::create($request->all());
-        }catch(QueryException $e){
-            return  WorkerController::answer('error','Ошибка. Введенные данные некорректные');
-        }
-        return WorkerController::answer('success','Данные добавлены успешно');
     }
 
     /**
@@ -122,22 +109,12 @@ class WorkController extends Controller
         }
         return WorkerController::answer('success','Данные обновлены успешно');
     }
+
     /**
      * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function destroy(Request $request)
-    {
-        try {
-            Post::where('id', $request->id)->delete();
-        } catch (QueryException $e) {
-            return  WorkerController::answer('error','Ошибка. Введенные данные некорректные');
-        }
-        return WorkerController::answer('success','Данные обновлены успешно');
-    }
-    /**
- * @param Request $request
- */
-    public function destroyWork(Request $request)
     {
         try {
             Work::where('id', $request->id)->delete();
@@ -145,5 +122,14 @@ class WorkController extends Controller
             return  WorkerController::answer('error','Ошибка. Введенные данные некорректные');
         }
         return WorkerController::answer('success','Данные обновлены успешно');
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public  function getWorker(Request $request){
+        $workers = Work::where('id',$request->id)->with('posts.post.workers')->get();
+        return response()->json($workers);
     }
 }

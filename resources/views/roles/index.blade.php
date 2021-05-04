@@ -4,10 +4,10 @@
 @section('content')
 <div class="row">
     <div class="col-lg-12 margin-tb">
-        <div class="pull-left">
+        <div class="float-start">
             <h2>Управление ролями</h2>
         </div>
-        <div class="pull-right">
+        <div class="float-end">
         @can('role-create')
             <a class="btn btn-success" href="{{ route('roles.create') }}"> Создать роль</a>
             @endcan

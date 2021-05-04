@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Work extends Model
+class Material extends Model
 {
     use HasFactory;
 
@@ -13,12 +13,4 @@ class Work extends Model
         'name',
         'price'
     ];
-
-    public function posts(){
-        return $this->hasMany(WorkHasPost::class);
-    }
-
-    public function orders(){
-        return $this->hasMany(Order::class);
-    }
 }

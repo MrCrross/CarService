@@ -55,7 +55,6 @@
                     @endforeach
                 </select>
                 <input class="form-control" name="state" type="text"  value="" pattern="[АВЕКМНОРСТУХ]{1}[0-9]{3}[АВЕКМНОРСТУХ]{2}[0-9]{2}" placeholder="Госномер">
-                <a class="input-group-text" href="{{asset('cars')}}"> <img class="icon" src="{{asset('image/auto-plus.svg')}}" alt="Добавить автомобилей пользователю"></a>
             </div>
         </td>
         <td>
@@ -125,7 +124,7 @@
         </td>
         <td>
             @can('customer-delete')
-                <button class="btn btn-danger customer-delete" type="button" data-toggle="modal" data-target="#delete">&times;</button>
+                <button class="btn btn-danger customer-delete" type="button" data-toggle="modal" data-target="#deleteCustomer">&times;</button>
             @endcan
         </td>
 
@@ -133,28 +132,6 @@
     </tr>
     @endforeach
 </table>
-
-@can('customer-delete')
-    {{-- Modal delete --}}
-<div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Удаление клиента</h5>
-                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                {{ Form::open(array('action' => 'App\Http\Controllers\CustomerController@destroy','method'=>'delete','id'=>'customer-delete')) }}
-                    {{Form::label('delete')}}
-                    <input id="delete-id" class="visually-hidden" name="id" value="" readonly>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
-                    {{Form::submit('Удалить',array('class'=>'btn btn-danger'))}}
-                {{ Form::close() }}
-            </div>
-        </div>
-    </div>
-</div>
-@endcan
-
+@include('layouts.modal')
 <script src="{{ asset('js/customer.js') }}"></script>
 @endsection

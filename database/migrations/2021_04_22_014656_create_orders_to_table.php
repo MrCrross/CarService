@@ -15,20 +15,8 @@ class CreateOrdersToTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('worker_id')->unsigned();
-            $table->foreign('worker_id')
-                ->references('id')
-                ->on('workers');
-            $table->bigInteger('work_id')->unsigned();
-            $table->foreign('work_id')
-                ->references('id')
-                ->on('works');
-            $table->bigInteger('customer_id')->unsigned();
-            $table->foreign('customer_id')
-                ->references('id')
-                ->on('customers');
             $table->date('registration');
-            $table->date('execution');
+            $table->date('completed');
             $table->timestamps();
         });
     }

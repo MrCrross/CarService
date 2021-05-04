@@ -131,7 +131,7 @@
                     {{Form::submit('&#10003;',array('class'=>'input-group-text btn btn-primary'))}}
                 @endcan
                 @can('customer-delete')
-                    <button class="form-control btn btn-danger car-delete" type="button" data-toggle="modal" data-target="#delete">&times;</button>
+                    <button class="form-control btn btn-danger car-delete" type="button" data-toggle="modal" data-target="#deleteCar">&times;</button>
                 @endcan
             </div>
         </td>
@@ -140,112 +140,7 @@
     @endforeach
 </table>
 
-@can('model-create')
-{{-- Modal add model--}}
-<div class="modal fade" id="addModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Добавить модель автомобиля</h5>
-                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <table class="table table-bordered table-hover">
-                    <thead>
-                        <tr>
-                            <th>Фирма</th>
-                            <th>Название модели</th>
-                            <th>Год выпуска</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {{ Form::open(array('action' => 'App\Http\Controllers\CarController@createModel','method'=>'post')) }}
-                            <tr>
-                                <td>
-                                    <div class="input-group">
-                                        <select class="form-select" name="firm">
-                                            @foreach ($firms as $firm)
-                                                <option value="{{$firm->id}}">{{$firm->name}}</option>
-                                            @endforeach
-                                        </select>
-                                        <img class="icon" src="{{asset('image/plus.svg')}}" alt="Добавить фирму" data-toggle="modal" data-target="#addFirm">
-                                    </div>
-                                </td>
-                                <td><input class="form-control" type="text" name='name' placeholder="Введите название модели автомобиля" pattern="^[\x1F-\xBF]*"></td>
-                                <td><input class="form-control" type="text" name='year' placeholder="Введите год выпуска автомобиля" pattern="[0-9]{4}"></td>
-                                <td>
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
-                                        {{Form::submit('Добавить',array('class'=>'btn btn-primary'))}}
-                                    </div>
-                                </td>
-                            </tr>
-                        {{ Form::close() }}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
-@endcan
-@can('firm-create')
-
-{{-- Modal add firm--}}
-<div class="modal fade" id="addFirm" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Добавить фирму автомобиля</h5>
-                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <table class="table table-bordered table-hover">
-                    <thead>
-                        <tr>
-                            <th>Название фирмы</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {{ Form::open(array('action' => 'App\Http\Controllers\CarController@createFirm','method'=>'post')) }}
-                            <tr>
-                                <td><input class="form-control" type="text" name='name' placeholder="Введите название фирмы автомобиля" pattern="[А-Яа-яA-Za-z\.\s]*"></td>
-                                <td>
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
-                                        {{Form::submit('Добавить',array('class'=>'btn btn-primary'))}}
-                                    </div>
-                                </td>
-                            </tr>
-                        {{ Form::close() }}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
-@endcan
-
-@can('customer-delete')
-    {{-- Modal delete --}}
-<div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Удаление автомобиль</h5>
-                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                {{ Form::open(array('action' => 'App\Http\Controllers\CarController@destroy','method'=>'delete','id'=>'car-delete')) }}
-                    {{Form::label('delete')}}
-                    <input id="delete-id" class="visually-hidden" name="id" value="" readonly>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
-                    {{Form::submit('Удалить',array('class'=>'btn btn-danger'))}}
-                {{ Form::close() }}
-            </div>
-        </div>
-    </div>
-</div>
-@endcan
+@include('layouts.modal')
 
 <script src="{{ asset('js/car.js') }}"></script>
 @endsection

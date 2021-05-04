@@ -4,10 +4,10 @@
 @section('content')
 <div class="row">
     <div class="col-lg-12 margin-tb">
-        <div class="pull-left">
+        <div class="float-start">
             <h2> Просмотр пользователя</h2>
         </div>
-        <div class="pull-right">
+        <div class="float-end">
             <a class="btn btn-primary" href="{{ route('users.index') }}"> Назад</a>
         </div>
     </div>
@@ -32,7 +32,7 @@
             <strong>Роли:</strong>
             @if(!empty($user->getRoleNames()))
                 @foreach($user->getRoleNames() as $v)
-                    <label class="badge badge-success">{{ $v }}</label>
+                    <label class="badge bg-success">{{ $v }}</label>
                 @endforeach
             @endif
         </div>

@@ -17,9 +17,14 @@ class Customer extends Model
         'phone'
     ];
 
-
     public function cars()
     {
         return $this->hasMany(Car::class);
     }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
 }

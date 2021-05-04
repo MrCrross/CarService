@@ -24,4 +24,8 @@ class Worker extends Model
     public function contracts(){
         return $this->hasMany(WorkerContract::class);
     }
+
+    public function orders(){
+        return $this->hasMany(Order::class);
+    }
 }

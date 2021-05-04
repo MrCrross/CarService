@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'Laravel 8 User Roles and Permissions Tutorial') }}</title>
+    <title>{{ config('app.name', 'Автосервис') }}</title>
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     <!-- Fonts -->
@@ -20,7 +20,7 @@
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    Автосервис
+                    {{ config('app.name', 'Автосервис') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -35,10 +35,10 @@
                             @can('order-list')
                                 <li><a class="nav-link" href="{{ route('orders.index') }}">Заказы</a></li>
                             @endcan
-                            @can('customer-list')
+                            @can('customer-edit')
                                 <li><a class="nav-link" href="{{ route('customers.index') }}">Клиенты</a></li>
                             @endcan
-                            @can('worker-list')
+                            @can('worker-edit')
                                 <li><a class="nav-link" href="{{ route('workers.index') }}">Сотрудники</a></li>
                             @endcan
                             @can('role-list')
@@ -55,7 +55,7 @@
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        {{ __('Выйти') }}
                                     </a>
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
