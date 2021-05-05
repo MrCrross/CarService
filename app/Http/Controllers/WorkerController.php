@@ -19,7 +19,7 @@ class WorkerController extends Controller
     function __construct()
     {
         $this->middleware('permission:worker-create', ['only' => ['create']]);
-        $this->middleware('permission:worker-edit', ['only' => ['index', 'update','show']]);
+        $this->middleware('permission:worker-edit', ['only' => ['index','update','show','search']]);
         $this->middleware('permission:contract-edit', ['only' => ['download']]);
         $this->middleware('permission:worker-delete', ['only' => ['destroy']]);
     }
@@ -30,6 +30,25 @@ class WorkerController extends Controller
     public function index()
     {
         return $this->answer('', '');
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function search(Request $request)
+    {
+        $workers = Worker::where('first_name','like','%'.$request->search.'%')
+            ->orWhere('last_name','like','%'.$request->search.'%')
+            ->orWhere('father_name','like','%'.$request->search.'%')
+            ->orWhere('phone','like','%'.$request->search.'%')
+            ->with('post.works.work', 'contracts.post','orders')
+            ->get();
+        $posts = Post::get();
+        return response()->json([
+            'workers'=>$workers,
+            'posts'=>$posts
+        ]);
     }
 
     /**
@@ -56,9 +75,11 @@ class WorkerController extends Controller
 
     /**
      * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function update(Request $request)
     {
+        dd($request->file('contract'));
         try {
             Worker::where('id', $request->id)->update([
                 'first_name' => $request->first_name,

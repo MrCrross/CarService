@@ -99,7 +99,7 @@
                     @endforeach
                 </select>
                 @can('model-create')
-                <span class="input-group-text" data-toggle="modal" data-target="#add">&#128393;</span>
+                <span class="input-group-text" data-toggle="modal" data-target="#addModel">&#128393;</span>
                 @endcan
             </div>
             @endcan</td>

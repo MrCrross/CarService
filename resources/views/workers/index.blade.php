@@ -23,21 +23,26 @@
                 </h2>
             </div>
             <div class="float-end">
-                @can('post-create')
-                    <button class="btn btn-success" data-toggle="modal" data-target="#addPost">Добавить должность
-                    </button>
-                @endcan
-                @can('work-create')
-                    <button class="btn btn-success" data-toggle="modal" data-target="#addWork">Добавить работу</button>
-                    <button class="btn btn-success" data-toggle="modal" data-target="#addWorkPost">Назначить работу
-                        должности
-                    </button>
-                @endcan
+                <div class="input-group">
+                    <input class="form-control" type="search" placeholder="Поиск">
+                    <button id="btnSearch" class="input-group-text"><img src="{{asset('image/search.svg')}}" alt="Найти" class="icon-sm"></button>
+                    @can('post-create')
+                        <button class="btn btn-success ms-2" data-toggle="modal" data-target="#addPost">Добавить должность
+                        </button>
+                    @endcan
+                    @can('work-create')
+                        <button class="btn btn-success" data-toggle="modal" data-target="#addWork">Добавить работу</button>
+                        <button class="btn btn-success" data-toggle="modal" data-target="#addWorkPost">Назначить работу
+                            должности
+                        </button>
+                    @endcan
+                </div>
+
             </div>
         </div>
     </div>
 <div id="print">
-    <table class="table table-bordered table-hover">
+    <table id="t-worker" class="table table-bordered table-hover">
         <tr>
             <th scope="col">№</th>
             <th scope="col">Фамилия</th>
@@ -57,6 +62,114 @@
                 <th scope="col">Выполненные заказы</th>
             @endcan
         </tr>
+{{--        Строка для заполнения при поиске--}}
+        <tr id="clone" class="visually-hidden">
+            <th scope="row">
+                <span></span>
+                <input class="visually-hidden" name="id" value="" readonly>
+            </th>
+            <td>
+                <span class="lastName"></span>
+                @can('worker-edit')
+                    <span class="worker-edit">&#128393;</span>
+                    <div class="input-group visually-hidden">
+                        <input class="form-control" name="last_name" type="text" value=""
+                               pattern="^[A-Za-zА-Яа-яЁё]+$">
+                        {{Form::submit('&#10003;',array('class'=>'btn btn-primary'))}}
+                    </div>
+                @endcan
+            </td>
+            <td>
+                <span class="firstName"></span>
+                @can('worker-edit')
+                    <span class="worker-edit">&#128393;</span>
+                    <div class="input-group visually-hidden">
+                        <input class="form-control" name="first_name" type="text" value=""
+                               pattern="^[A-Za-zА-Яа-яЁё]+$">
+                        {{Form::submit('&#10003;',array('class'=>'btn btn-primary'))}}
+                    </div>
+                @endcan
+            </td>
+            <td>
+                <span class="fatherName"></span>
+                @can('worker-edit')
+                    <span class="worker-edit">&#128393;</span>
+                    <div class="input-group visually-hidden">
+                        <input class="form-control " name="father_name" type="text"
+                               value="" pattern="^[A-Za-zА-Яа-яЁё]+$">
+                        {{Form::submit('&#10003;',array('class'=>'btn btn-primary'))}}
+                    </div>
+                @endcan</td>
+            <td>
+                <span class="phone"></span>
+                @can('worker-edit')
+                    <span class="worker-edit">&#128393;</span>
+                    <div class="input-group visually-hidden">
+                        <input class="form-control" name="phone" type="text" value=""
+                               pattern="^[0-9]+$">
+                        {{Form::submit('&#10003;',array('class'=>'btn btn-primary'))}}
+                    </div>
+                @endcan</td>
+            @can('post-list')
+                <td>
+                    <span class="post"></span>
+                    @can('post-edit')
+                        <span class="worker-edit">&#128393;</span>
+                        <div class="input-group visually-hidden">
+                            <select class="form-select" name="post">
+                            </select>
+                            {{Form::file('contract',['class'=>'form-control','accept'=>'.pdf,.doc,.docx'])}}
+                        </div>
+                    @endcan
+                </td>
+            @endcan
+            @can('work-list')
+                <td class="td-work">
+                    <div class="works btn-group mb-2">
+                        <label for="works" type="text"
+                               data-id="" data-price=""></label>
+                        @can('work-edit')
+                            <span class="work-edit" data-toggle="modal"
+                                  data-target="#editWork">&#128393;</span>
+                        @endcan
+                        @can('work-delete')
+                            <span class="work-delete" type="button" data-toggle="modal"
+                                  data-target="#deleteWork">&times;
+                                </span>
+                        @endcan
+                    </div>
+                </td>
+            @endcan
+            @can('contract-list')
+                <td class="td-contract">
+                    <div class="contracts btn-group">
+                        <span class="contract"></span>
+                        @can('contract-edit')
+                            <span class="download" data-contract="">
+                                <img class="icon-sm" src="{{asset('image/download.svg')}}" alt="Скачать документ о переводе">
+                            </span>
+                        @endcan
+                    </div>
+                </td>
+            @endcan
+            @can('order-list')
+                <td class="td-order">
+                    <a class="btn-sm link-dark orderShow" href="">№</a>
+                    <a class="btn-sm link-dark workerShow" href="">...</a>
+                </td>
+            @endcan
+            <td class="btns">
+                <div class="btn-group">
+                    {{Form::submit('&#10003;',array('class'=>'btn btn-primary'))}}
+                    @can('worker-delete')
+                        <button class="btn btn-danger worker-delete" type="button" data-toggle="modal"
+                                data-target="#deleteWorker">&times;
+                        </button>
+                    @endcan
+                </div>
+            </td>
+        </tr>
+{{--        Форма нового сотрудника--}}
         @can('worker-create')
             <tr id="create">
                 <th scope="row"></th>
@@ -98,8 +211,9 @@
                 {{ Form::close() }}
             </tr>
         @endcan
+{{--        Вывод данных о сотрудниках--}}
         @foreach ($workers as $key => $worker)
-            <tr>
+            <tr class="tr-worker">
                 {{ Form::open(array('action' => 'App\Http\Controllers\WorkerController@update','method'=>'patch','enctype'=>'multipart/form-data')) }}
                 <th scope="row">{{ ++$key }}
                     <input class="visually-hidden" name="id" value="{{ $worker->id }}" readonly>
@@ -152,11 +266,7 @@
                             <div class="input-group visually-hidden">
                                 <select class="form-select" name="post">
                                     @foreach ($posts as $post)
-                                        @if ($post->id == $worker->post->id)
-                                            <option value="{{$post->id}}" selected>{{$post->name}}</option>
-                                        @else
-                                            <option value="{{$post->id}}">{{$post->name}}</option>
-                                        @endif
+                                        <option value="{{$post->id}}">{{$post->name}}</option>
                                     @endforeach
                                 </select>
                                 {{Form::file('contract',['class'=>'form-control','accept'=>'.pdf,.doc,.docx'])}}

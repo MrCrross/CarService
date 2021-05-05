@@ -80,7 +80,7 @@ class TemplateDatabaseSeeder extends Seeder
             [
                 'model_id'=>2,
                 'customer_id'=>1,
-                'state_number'=>'Х719ЛН38'
+                'state_number'=>'Х719РН38'
             ],
             [
                 'model_id'=>3,

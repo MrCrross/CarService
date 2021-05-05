@@ -13,15 +13,25 @@ class MaterialController extends Controller
      */
     function __construct()
     {
-        $this->middleware('permission:material-edit', ['only' => ['index','create']]);
+        $this->middleware('permission:material-edit', ['only' => ['index','create','search']]);
         $this->middleware('permission:material-create', ['only' => ['create']]);
         $this->middleware('permission:material-delete', ['only' => ['destroy']]);
     }
 
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function index(){
         return $this->answer('','');
     }
 
+    public function search(Request $request){
+        $material = Material::where('name','like','%'.$request->search.'%')
+            ->orWhere('price','like','%'.$request->search.'%')
+            ->orWhere('count','like','%'.$request->search.'%')
+            ->get();
+        return response()->json($material);
+    }
     /**
      * @param Request $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View

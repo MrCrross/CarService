@@ -49,6 +49,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::group(['middleware'=>['permission:material-edit']],function(){
         Route::get('materials', [MaterialController::class, 'index'])->name('materials.index');
         Route::post('materials', [MaterialController::class, 'create']);
+        Route::post('materials/search', [MaterialController::class, 'search']);
         Route::patch('materials', [MaterialController::class, 'update']);
         Route::delete('materials', [MaterialController::class, 'destroy']);
     });
@@ -56,6 +57,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::group(['middleware'=>['permission:customer-edit']],function(){
         Route::get('customers', [CustomerController::class,'index'])->name('customers.index');
         Route::post('customers', [CustomerController::class,'create']);
+        Route::post('customers/search', [CustomerController::class,'search']);
         Route::patch('customers', [CustomerController::class,'update']);
         Route::delete('customers', [CustomerController::class,'destroy']);
 
@@ -70,6 +72,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::group(['middleware'=>['permission:worker-edit']],function(){
         Route::get('workers', [WorkerController::class,'index'])->name('workers.index');
         Route::get('workers/{id}', [WorkerController::class,'show'])->name('workers.show');
+        Route::post('workers/search', [WorkerController::class,'search']);
         Route::put('workers', [WorkerController::class,'download']);
         Route::post('workers', [WorkerController::class,'create']);
         Route::patch('workers', [WorkerController::class,'update']);

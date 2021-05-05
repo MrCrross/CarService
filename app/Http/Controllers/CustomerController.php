@@ -20,7 +20,7 @@ class CustomerController extends Controller
     {
         $this->middleware('permission:customer-list', ['only' => ['getCar']]);
         $this->middleware('permission:customer-create', ['only' => ['create','jsonCreate']]);
-        $this->middleware('permission:customer-edit', ['only' => ['index','update']]);
+        $this->middleware('permission:customer-edit', ['only' => ['index','update','search']]);
         $this->middleware('permission:customer-delete', ['only' => ['destroy']]);
     }
 
@@ -35,6 +35,20 @@ class CustomerController extends Controller
     }
 
     /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function search(Request $request)
+    {
+        $customers = Customer::where('first_name','like','%'.$request->search.'%')
+            ->orWhere('last_name','like','%'.$request->search.'%')
+            ->orWhere('father_name','like','%'.$request->search.'%')
+            ->orWhere('phone','like','%'.$request->search.'%')
+            ->with('cars.model.firm')
+            ->get();
+        $models= CarModel::with('firm')->get();
+        return response()->json(['customers'=>$customers,'models'=>$models]);
+    }
+    /**
      * @param Request $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
@@ -46,10 +60,14 @@ class CustomerController extends Controller
                 'father_name'=>$request->father_name,
                 'phone'=>$request->phone
             ]);
-            if(isset($request->state) && isset($request->model)){
-                $this->createCar($request->model,$request->id,$request->state);
-            };
+            foreach ($request->car as $key=>$car){
+                Car::where('id',$car)->update([
+                    'model_id'=>$request->model[$key],
+                    'state_number'=>$request->state[$key]
+                ]);
+            }
         }catch(QueryException $e){
+            dd($e);
             $customers = Customer::with('cars.model.firm')->get();
             $models= CarModel::with('firm')->get();
             if(strpos($e->errorInfo[2],'customer.phone')){
@@ -71,7 +89,7 @@ class CustomerController extends Controller
         try{
             $customer = Customer::create($request->all());
             if(isset($request->state) && isset($request->model)){
-                $this->createCar([
+                Car::create([
                     'model_id' => $request->model,
                     'customer_id' => $customer->id,
                     'state_number' => $request->state,

@@ -275,7 +275,7 @@ function nowDate(){
     document.getElementById('dateReg').innerHTML = day+"."+month+"."+now.getFullYear()
     document.getElementById('dateComp').innerHTML = day+"."+month+"."+now.getFullYear()
 }
-
+//Инициализация
 function init() {
     const tds = document.querySelectorAll('td')
     const form = document.getElementById('createOrderForm')
