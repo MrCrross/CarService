@@ -15,13 +15,18 @@
 <div class="row">
     <div class="col-lg-12 mb-2">
         <div class="float-start">
-            <h2>Клиенты</h2>
+            <h2>Клиенты
+                @can('customer-print')
+                    <button class="btn" onclick="print()"><img class="icon-sm" src="{{asset('image/print.svg')}}" alt="Распечатать"></button>
+                @endcan
+            </h2>
         </div>
         <div class="float-end">
             <a href="{{asset('cars')}}" class="btn btn-success">Добавить автомобиль</a>
         </div>
     </div>
 </div>
+<div id="print">
 <table class="table table-bordered table-hover">
     <tr>
         <th scope="col">№</th>
@@ -32,14 +37,14 @@
         <th scope="col">Автомобиль</th>
     </tr>
     @can('customer-create')
-    <tr>
+    <tr id="create">
         <th scope="row"></th>
         {{ Form::open(array('action' => 'App\Http\Controllers\CustomerController@create','method'=>'post')) }}
         <td>
-            <input class="form-control" name="first_name" type="text" pattern="^[A-Za-zА-Яа-яЁё]+$" placeholder="Введите имя клиента" required>
+            <input class="form-control" name="last_name" type="text" pattern="^[A-Za-zА-Яа-яЁё]+$" placeholder="Введите фамилию клиента" required>
         </td>
         <td>
-            <input class="form-control" name="last_name" type="text" pattern="^[A-Za-zА-Яа-яЁё]+$" placeholder="Введите фамилию клиента" required>
+            <input class="form-control" name="first_name" type="text" pattern="^[A-Za-zА-Яа-яЁё]+$" placeholder="Введите имя клиента" required>
         </td>
         <td>
             <input class="form-control" name="father_name" type="text" pattern="^[A-Za-zА-Яа-яЁё]+$" placeholder="Введите отчество клиента" required>
@@ -69,21 +74,22 @@
         <th scope="row">{{ ++$key }}
             <input class="visually-hidden" name="id" value="{{ $customer->id }}" readonly>
         </th>
-        <td>{{ $customer->first_name }}
+        <td>{{ $customer->last_name }}
             @can('customer-edit')
-            <span class="customer-edit">&#128393;</span>
+                <span class="customer-edit">&#128393;</span>
+                <div class="input-group visually-hidden">
+                    <input class="form-control" name="last_name" type="text"  value="{{ $customer->last_name }}" pattern="^[A-Za-zА-Яа-яЁё]+$">
+                    {{Form::submit('&#10003;',array('class'=>'input-group-text btn btn-primary'))}}
+                </div>
+            @endcan</td>
+        <td>
+            {{ $customer->first_name }}
+            @can('customer-edit')
+                <span class="customer-edit">&#128393;</span>
                 <div class="input-group visually-hidden">
                     <input class="form-control" name="first_name" type="text"  value="{{ $customer->first_name }}" pattern="^[A-Za-zА-Яа-яЁё]+$">
                     {{Form::submit('&#10003;',array('class'=>'input-group-text btn btn-primary'))}}
                 </div>
-            @endcan</td>
-        <td>{{ $customer->last_name }}
-            @can('customer-edit')
-            <span class="customer-edit">&#128393;</span>
-            <div class="input-group visually-hidden">
-                <input class="form-control" name="last_name" type="text"  value="{{ $customer->last_name }}" pattern="^[A-Za-zА-Яа-яЁё]+$">
-                {{Form::submit('&#10003;',array('class'=>'input-group-text btn btn-primary'))}}
-            </div>
             @endcan</td>
         <td>{{ $customer->father_name }}
             @can('customer-edit')
@@ -103,7 +109,7 @@
             @endcan</td>
         <td class="w-25">
             <div class="input-group">
-                <select class="form-select">
+                <select class="form-select cars">
                     @foreach ($customer->cars as $car)
                         <option value="{{$car->id}}">{{$car->model->firm->name.' '.$car->model->name.' '.$car->model->year_release.' '.$car->state_number}}</option>
                     @endforeach
@@ -122,7 +128,7 @@
                 @endcan
             </div>
         </td>
-        <td>
+        <td class="btns">
             @can('customer-delete')
                 <button class="btn btn-danger customer-delete" type="button" data-toggle="modal" data-target="#deleteCustomer">&times;</button>
             @endcan
@@ -132,6 +138,8 @@
     </tr>
     @endforeach
 </table>
+</div>
 @include('layouts.modal')
+<script src="{{ asset('js/print.js') }}"></script>
 <script src="{{ asset('js/customer.js') }}"></script>
 @endsection

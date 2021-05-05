@@ -18,10 +18,10 @@ class CustomerController extends Controller
      */
     function __construct()
     {
-        $this->middleware('permission:customer-list', ['only' => ['index','getCar']]);
-        $this->middleware('permission:customer-create', ['only' => ['index','create','jsonCreate']]);
+        $this->middleware('permission:customer-list', ['only' => ['getCar']]);
+        $this->middleware('permission:customer-create', ['only' => ['create','jsonCreate']]);
         $this->middleware('permission:customer-edit', ['only' => ['index','update']]);
-        $this->middleware('permission:customer-delete', ['only' => ['index','destroy']]);
+        $this->middleware('permission:customer-delete', ['only' => ['destroy']]);
     }
 
     /**

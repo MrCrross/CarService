@@ -24,7 +24,7 @@
 <table class="table table-bordered">
  <tr>
    <th>#</th>
-   <th>Название</th>
+   <th>Имя пользователя</th>
    <th>Почта</th>
    <th>Роли</th>
    <th width="280px">Действия</th>
@@ -37,7 +37,7 @@
     <td>
       @if(!empty($user->getRoleNames()))
         @foreach($user->getRoleNames() as $v)
-           <label class="badge badge-success">{{ $v }}</label>
+           <label class="badge bg-success">{{ $v }}</label>
         @endforeach
       @endif
     </td>

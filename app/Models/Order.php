@@ -10,9 +10,15 @@ class Order extends Model
     use HasFactory;
 
     protected $fillable = [
+        'car_id',
+        'price',
         'registration',
         'completed'
     ];
+
+    public function car(){
+        return $this->belongsTo(Car::class);
+    }
 
     public function compositions(){
         return $this->hasMany(OrderComposition::class);

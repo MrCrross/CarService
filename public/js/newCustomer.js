@@ -22,7 +22,7 @@ function visFirmHandler(item){
     }
 }
 
-function submitHandler(e){
+function submitCustomerHandler(e){
     e.preventDefault()
     const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
     const result = document.getElementById('result')
@@ -160,7 +160,7 @@ function submitWithFirmName(token,first_name,last_name,father_name,phone,firm_na
             result.innerHTML = error
         })
 }
-
+//Функция закрытия модального окна по его ID
 function closeModal(modalId) {
     // get modal
     const modal = document.getElementById(modalId);
@@ -174,9 +174,138 @@ function closeModal(modalId) {
     document.body.removeChild(modalBackdrops[0]);
 }
 
+//Обработка отправки данных для добавление авто клиенту
+function submitCarHandler(e){
+    e.preventDefault()
+    const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+    const result = document.getElementById('result')
+    const form = document.querySelector('#formCreateCar')
+    const formResult = form.parentNode.querySelector('.result')
+    const customer_id = form.querySelector('input[name="nameCustomer"]').dataset.id
+    const model_id = form.querySelector('select[name="model_id"]').value
+    const model_name = form.querySelector('input[name="model_name"]').value
+    const model_year = form.querySelector('input[name="model_year"]').value
+    const firm_id = form.querySelector('select[name="firm_id"]').value
+    const firm_name = form.querySelector('input[name="firm_name"]').value
+    const state = form.querySelector('input[name="state"]').value
+    if(model_id!=='0'){
+        submitCarWithModelId(token,customer_id,model_id,state,result)
+        return
+    }
+    if(model_id==='0' && firm_id!=='0'){
+        submitCarWithFirmId(token,customer_id,firm_id,model_name,model_year,state,result)
+        return
+    }
+    if(model_id==='0' && firm_id==='0'){
+        submitCarWithFirmName(token,customer_id,firm_name,model_name,model_year,state,result)
+        return
+    }
+    formResult.classList.add('alert-danger')
+    formResult.classList.remove('visually-hidden')
+    formResult.innerHTML='Недостаточно данных'
+}
+//Отправка данных если такая модель автомобиля есть в базе
+function submitCarWithModelId(token,customer_id,model_id,state,result){
+    fetch('/car/create',{
+        headers:{
+            "Content-Type":"application/json",
+            "Accept":'application/json',
+            "X-Requested-With": "XMLHttpRequest",
+            "X-CSRF-Token": token
+        },method: "post",
+        credentials: "same-origin",
+        body: JSON.stringify({
+            customer_id:customer_id,
+            model_id:model_id,
+            state:state
+        })
+    })
+        .then(res=>res.json())
+        .then((res)=>{
+            closeModal("createCar")
+            result.classList.add('alert-success')
+            result.classList.remove('visually-hidden')
+            result.innerHTML = res
+            location.reload()
+        })
+        .catch((error)=>{
+            closeModal("createCar")
+            result.classList.add('alert-danger')
+            result.classList.remove('visually-hidden')
+            result.innerHTML = error
+        })
+}
+//Отправка данных если такой модели автомобиля нет, но есть фирма
+function submitCarWithFirmId(token,customer_id,firm_id,model_name,model_year,state,result){
+    fetch('/car/create',{
+        headers:{
+            "Content-Type":"application/json",
+            "Accept":'application/json',
+            "X-Requested-With": "XMLHttpRequest",
+            "X-CSRF-Token": token
+        },method: "post",
+        credentials: "same-origin",
+        body: JSON.stringify({
+            customer_id: customer_id,
+            firm_id:firm_id,
+            model_name: model_name,
+            model_year: model_year,
+            state:state
+        })
+    })
+        .then(res=>res.json())
+        .then((res)=>{
+            closeModal("createCar")
+            result.classList.add('alert-success')
+            result.classList.remove('visually-hidden')
+            result.innerHTML = res
+            location.reload()
+        })
+        .catch((error)=>{
+            closeModal("createCar")
+            result.classList.add('alert-danger')
+            result.classList.remove('visually-hidden')
+            result.innerHTML = error
+        })
+}
+//Отправка данных если такой модели и фирмы нет
+function submitCarWithFirmName(token,customer_id,firm_name,model_name,model_year,state,result){
+    fetch('/car/create',{
+        headers:{
+            "Content-Type":"application/json",
+            "Accept":'application/json',
+            "X-Requested-With": "XMLHttpRequest",
+            "X-CSRF-Token": token
+        },method: "post",
+        credentials: "same-origin",
+        body: JSON.stringify({
+            customer_id:customer_id,
+            firm_name:firm_name,
+            model_name: model_name,
+            model_year: model_year,
+            state:state
+        })
+    })
+        .then(res=>res.json())
+        .then((res)=>{
+            closeModal("createCar")
+            result.classList.add('alert-success')
+            result.classList.remove('visually-hidden')
+            result.innerHTML = res
+            location.reload()
+        })
+        .catch((error)=>{
+            closeModal("createCar")
+            result.classList.add('alert-danger')
+            result.classList.remove('visually-hidden')
+            result.innerHTML = error
+        })
+}
 function init(){
+    //Кнопка отправляющая данные на сервер
+    const submitCar = document.getElementById('formCreateCar')
 //Кнопка отправляющая данные на сервер
-    const submit = document.getElementById('formCreateCustomer')
+    const submitCustomer = document.getElementById('formCreateCustomer')
 //Кнопка скрывающая select Моделей авто и
 // открывающая select Фирм и input'ы Модели
     const visModel = document.querySelectorAll('.visModel')
@@ -189,7 +318,8 @@ function init(){
     visFirm.forEach(function (item){
         item.addEventListener('click',()=>visFirmHandler(item))
     })
-    submit.addEventListener('submit',submitHandler)
+    submitCustomer.addEventListener('submit',submitCustomerHandler)
+    submitCar.addEventListener('submit',submitCarHandler)
 }
 
 init()

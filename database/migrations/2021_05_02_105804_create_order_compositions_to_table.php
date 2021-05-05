@@ -30,11 +30,6 @@ class CreateOrderCompositionsToTable extends Migration
                 ->references('id')
                 ->on('works')
                 ->onDelete('cascade');
-            $table->bigInteger('customer_id')->unsigned();
-            $table->foreign('customer_id')
-                ->references('id')
-                ->on('customers')
-                ->onDelete('cascade');
             $table->timestamps();
         });
     }

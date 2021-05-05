@@ -15,6 +15,12 @@ class CreateOrdersToTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('car_id')->unsigned();
+            $table->foreign('car_id')
+                ->references('id')
+                ->on('cars')
+                ->onDelete('cascade');
+            $table->integer('price')->unsigned();
             $table->date('registration');
             $table->date('completed');
             $table->timestamps();

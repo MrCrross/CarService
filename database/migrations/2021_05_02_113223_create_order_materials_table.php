@@ -25,6 +25,7 @@ class CreateOrderMaterialsTable extends Migration
                 ->references('id')
                 ->on('materials')
                 ->onDelete('cascade');
+            $table->integer('count')->unsigned();
             $table->timestamps();
         });
     }

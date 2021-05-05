@@ -26,7 +26,7 @@
             <strong>Права доступа:</strong>
             @if(!empty($rolePermissions))
                 @foreach($rolePermissions as $v)
-                    <label class="badge bg-success">{{ $v->name }},</label>
+                    <label class="badge bg-success">{{ $v->name }}</label>,
                 @endforeach
             @endif
         </div>

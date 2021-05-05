@@ -16,7 +16,11 @@
     <div class="row">
         <div class="col-lg-12 mb-2">
             <div class="float-start">
-                <h2>Сотрудники</h2>
+                <h2>Сотрудники
+                    @can('worker-print')
+                        <button class="btn" onclick="print()"><img class="icon-sm" src="{{asset('image/print.svg')}}" alt="Распечатать"></button>
+                    @endcan
+                </h2>
             </div>
             <div class="float-end">
                 @can('post-create')
@@ -32,7 +36,7 @@
             </div>
         </div>
     </div>
-
+<div id="print">
     <table class="table table-bordered table-hover">
         <tr>
             <th scope="col">№</th>
@@ -49,24 +53,27 @@
             @can('contract-list')
                 <th scope="col">Должностная история</th>
             @endcan
+            @can('order-list')
+                <th scope="col">Выполненные заказы</th>
+            @endcan
         </tr>
         @can('worker-create')
-            <tr>
+            <tr id="create">
                 <th scope="row"></th>
                 {{ Form::open(array('action' => 'App\Http\Controllers\WorkerController@create','method'=>'post')) }}
-                <td>
-                    <input class="form-control" name="first_name" type="text" pattern="^[A-Za-zА-Яа-яЁё]+$"
-                           placeholder="Введите имя сотрудника" required>
-                </td>
                 <td>
                     <input class="form-control" name="last_name" type="text" pattern="^[A-Za-zА-Яа-яЁё]+$"
                            placeholder="Введите фамилию сотрудника" required>
                 </td>
                 <td>
+                    <input class="form-control" name="first_name" type="text" pattern="^[A-Za-zА-Яа-яЁё]+$"
+                           placeholder="Введите имя сотрудника" required>
+                </td>
+                <td>
                     <input class="form-control" name="father_name" type="text" pattern="^[A-Za-zА-Яа-яЁё]+$"
                            placeholder="Введите отчество сотрудника" required>
                 </td>
-                <td>
+                <td colspan="2">
                     <input class="form-control" name="phone" type="text" pattern="[0-9]{11}"
                            placeholder="Введите номер телефона сотрудника" required>
                 </td>
@@ -97,28 +104,32 @@
                 <th scope="row">{{ ++$key }}
                     <input class="visually-hidden" name="id" value="{{ $worker->id }}" readonly>
                 </th>
-                <td>{{ $worker->first_name }}
+                <td>
+                    {{ $worker->last_name }}
                     @can('worker-edit')
                         <span class="worker-edit">&#128393;</span>
-                        <div class="btn-group visually-hidden">
-                            <input class="form-control" name="first_name" type="text" value="{{ $worker->first_name }}"
-                                   pattern="^[A-Za-zА-Яа-яЁё]+$">
-                            {{Form::submit('&#10003;',array('class'=>'btn btn-primary'))}}
-                        </div>
-                    @endcan</td>
-                <td>{{ $worker->last_name }}
-                    @can('worker-edit')
-                        <span class="worker-edit">&#128393;</span>
-                        <div class="btn-group visually-hidden">
+                        <div class="input-group visually-hidden">
                             <input class="form-control" name="last_name" type="text" value="{{ $worker->last_name }}"
                                    pattern="^[A-Za-zА-Яа-яЁё]+$">
                             {{Form::submit('&#10003;',array('class'=>'btn btn-primary'))}}
                         </div>
-                    @endcan</td>
+                    @endcan
+                    </td>
+                <td>
+                    {{ $worker->first_name }}
+                    @can('worker-edit')
+                        <span class="worker-edit">&#128393;</span>
+                        <div class="input-group visually-hidden">
+                            <input class="form-control" name="first_name" type="text" value="{{ $worker->first_name }}"
+                                   pattern="^[A-Za-zА-Яа-яЁё]+$">
+                            {{Form::submit('&#10003;',array('class'=>'btn btn-primary'))}}
+                        </div>
+                    @endcan
+                </td>
                 <td>{{ $worker->father_name }}
                     @can('worker-edit')
                         <span class="worker-edit">&#128393;</span>
-                        <div class="btn-group visually-hidden">
+                        <div class="input-group visually-hidden">
                             <input class="form-control " name="father_name" type="text"
                                    value="{{ $worker->father_name }}" pattern="^[A-Za-zА-Яа-яЁё]+$">
                             {{Form::submit('&#10003;',array('class'=>'btn btn-primary'))}}
@@ -127,7 +138,7 @@
                 <td>{{ $worker->phone }}
                     @can('worker-edit')
                         <span class="worker-edit">&#128393;</span>
-                        <div class="btn-group visually-hidden">
+                        <div class="input-group visually-hidden">
                             <input class="form-control" name="phone" type="text" value="{{ $worker->phone }}"
                                    pattern="^[0-9]+$">
                             {{Form::submit('&#10003;',array('class'=>'btn btn-primary'))}}
@@ -187,7 +198,15 @@
                         @endforeach
                     </td>
                 @endcan
-                <td>
+                @can('order-list')
+                    <td>
+                        @foreach($worker->orders as $order)
+                            <a class="btn-sm link-dark" href="/orders/{{$order->order_id}}">№ {{$order->order_id}}</a>
+                        @endforeach
+                        <a class="btn-sm link-dark"  href="/workers/{{$worker->id}}">...</a>
+                    </td>
+                @endcan
+                <td class="btns">
                     <div class="btn-group">
                         {{Form::submit('&#10003;',array('class'=>'btn btn-primary'))}}
                         @can('worker-delete')
@@ -201,8 +220,8 @@
         @endforeach
         {{ Form::close() }}
     </table>
-
+</div>
     @include('layouts.modal')
-
+    <script src="{{ asset('js/print.js') }}"></script>
     <script src="{{ asset('js/worker.js') }}"></script>
 @endsection

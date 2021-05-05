@@ -16,7 +16,11 @@
     <div class="row">
         <div class="col-lg-12 mb-2">
             <div class="float-start">
-                <h2>Должности работы</h2>
+                <h2>Должности работы
+                    @can('worker-print')
+                        <button class="btn" onclick="print()"><img class="icon-sm" src="{{asset('image/print.svg')}}" alt="Распечатать"></button>
+                    @endcan
+                </h2>
             </div>
             <div class="float-end">
                 @can('post-create')
@@ -29,7 +33,7 @@
             </div>
         </div>
     </div>
-
+<div id="print">
     <table class="table table-bordered table-hover">
         <tr>
             <th scope="col">№</th>
@@ -68,7 +72,7 @@
                         @endforeach
                     </td>
                 @endcan
-                <td>
+                <td class="btns">
                     <div class="btn-group">
                         {{Form::submit('&#10003;',array('class'=>'btn btn-primary'))}}
                         @can('post-delete')
@@ -82,8 +86,8 @@
         @endforeach
         {{ Form::close() }}
     </table>
-
+</div>
     @include('layouts.modal')
-
+    <script src="{{ asset('js/print.js') }}"></script>
     <script src="{{ asset('js/worker.js') }}"></script>
 @endsection

@@ -15,7 +15,11 @@
 <div class="row">
     <div class="col-lg-12 mb-2">
         <div class="float-start">
-            <h2>Автомобили</h2>
+            <h2>Автомобили
+                @can('customer-print')
+                    <button class="btn" onclick="print()"><img class="icon-sm" src="{{asset('image/print.svg')}}" alt="Распечатать"></button>
+                @endcan
+            </h2>
         </div>
         <div class="float-end">
             <div class="btn-group">
@@ -30,6 +34,7 @@
         </div>
     </div>
 </div>
+<div id="print">
 <table class="table table-bordered table-hover">
     <tr>
         <th>№</th>
@@ -38,7 +43,7 @@
         <th>Государственный номер</th>
     </tr>
     @can('model-create')
-    <tr>
+    <tr id="create">
         <td></td>
         {{ Form::open(array('action' => 'App\Http\Controllers\CarController@create','method'=>'post')) }}
         <td>
@@ -57,7 +62,7 @@
             <div class="input-group">
                 <select class="form-select" name="customer">
                     @foreach ($customers as $customer)
-                        <option value="{{$customer->id}}">{{$customer->first_name." ".$customer->last_name." ".$customer->father_name}}</option>
+                        <option value="{{$customer->id}}">{{$customer->last_name." ".$customer->first_name." ".$customer->father_name}}</option>
                     @endforeach
                 </select>
                 @can('customer-list')
@@ -99,16 +104,16 @@
             </div>
             @endcan</td>
         <td>
-            <span>{{$car->customer->first_name." ".$car->customer->last_name." ".$car->customer->father_name}}</span>
+            <span>{{$car->customer->last_name." ".$car->customer->first_name." ".$car->customer->father_name}}</span>
             @can('customer-edit')
             <span class="car-edit">&#128393;</span>
             <div class="input-group visually-hidden">
                 <select class="form-select" name="customer">
                     @foreach ($customers as $customer)
                         @if ($customer->id == $car->customer->id)
-                        <option value="{{$customer->id}}" selected>{{$customer->first_name." ".$customer->last_name." ".$customer->father_name}}</option>
+                        <option value="{{$customer->id}}" selected>{{$customer->last_name." ".$customer->first_name." ".$customer->father_name}}</option>
                         @else
-                        <option value="{{$customer->id}}">{{$customer->first_name." ".$customer->last_name." ".$customer->father_name}}</option>
+                        <option value="{{$customer->id}}">{{$customer->last_name." ".$customer->first_name." ".$customer->father_name}}</option>
                         @endif
                     @endforeach
                 </select>
@@ -125,7 +130,7 @@
                 <input class="form-control" name="state" type="text"  value="{{ $car->state_number }}" pattern="[АВЕКМНОРСТУХ]{1}[0-9]{3}[АВЕКМНОРСТУХ]{2}[0-9]{2}">
             </div>
             @endcan</td>
-        <td>
+        <td class="btns">
             <div class="input-group">
                 @can('customer-edit','model-edit')
                     {{Form::submit('&#10003;',array('class'=>'input-group-text btn btn-primary'))}}
@@ -139,8 +144,8 @@
     </tr>
     @endforeach
 </table>
-
+</div>
 @include('layouts.modal')
-
+<script src="{{ asset('js/print.js') }}"></script>
 <script src="{{ asset('js/car.js') }}"></script>
 @endsection

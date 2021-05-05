@@ -59,6 +59,33 @@ function downloadHandler(item) {
     contract.value=url
     form.submit()
 }
+//Печать
+function print() {
+    const print = document.getElementById('print').cloneNode(true)
+    if(print.querySelector('#create')) print.querySelector('#create').remove()
+    print.querySelectorAll('input[name="works[]"]').forEach(function (item){
+       if(item.getAttribute('checked')!=='checked') item.parentNode.remove()
+    })
+    print.querySelectorAll('.worker-edit').forEach(function (item){
+        item.remove()
+    })
+    print.querySelectorAll('.work-edit').forEach(function (item){
+        item.remove()
+    })
+    print.querySelectorAll('.work-delete').forEach(function (item){
+        item.remove()
+    })
+    print.querySelectorAll('.btns').forEach(function (item){
+        item.remove()
+    })
+    print.querySelectorAll('input').forEach(function (item){
+        item.remove()
+    })
+    print.querySelectorAll('select').forEach(function (item){
+        item.remove()
+    })
+    CallPrint(print.innerHTML)
+}
 //Initialization
 function init() {
     edits.forEach(function(item) {

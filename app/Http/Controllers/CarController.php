@@ -15,10 +15,9 @@ class CarController extends Controller
     //
     function __construct()
     {
-        $this->middleware('permission:customer-list', ['only' => ['index']]);
-        $this->middleware('permission:customer-create', ['only' => ['index','create']]);
+        $this->middleware('permission:customer-create', ['only' => ['create','jsonCreate']]);
         $this->middleware('permission:customer-edit', ['only' => ['index','update']]);
-        $this->middleware('permission:customer-delete', ['only' => ['index','destroy']]);
+        $this->middleware('permission:customer-delete', ['only' => ['destroy']]);
     }
 
     public function index()
@@ -103,6 +102,48 @@ class CarController extends Controller
         $customers = Customer::get();
         $firms = CarFirm::get();
         return view('cars.index',['cars' => $cars,'models'=>$models,'customers'=>$customers,'firms'=>$firms,'success'=>'Данные созданы успешно!']);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public  function jsonCreate(Request $request){
+        if(isset($request->model_id)){
+            Car::create([
+                'model_id' => $request->model_id,
+                'customer_id' => $request->customer_id,
+                'state_number' => $request->state
+            ]);
+        };
+        if(isset($request->firm_id)){
+            $model= CarModel::create([
+                'firm_id'=>$request->firm_id,
+                'name'=>$request->model_name,
+                'year_release'=>$request->model_year
+            ]);
+            Car::create([
+                'model_id' => $model->id,
+                'customer_id' => $request->customer_id,
+                'state_number' => $request->state
+            ]);
+        };
+        if(isset($request->firm_name)){
+            $firm =CarFirm::create([
+                'name'=>$request->firm_name
+            ]);
+            $model= CarModel::create([
+                'firm_id'=>$firm->id,
+                'name'=>$request->model_name,
+                'year_release'=>$request->model_year
+            ]);
+            Car::create([
+                'model_id' => $model->id,
+                'customer_id' => $request->customer_id,
+                'state_number' => $request->state
+            ]);
+        };
+        return response()->json('Автомобиль добавлен');
     }
 
     public function destroy(Request $request){

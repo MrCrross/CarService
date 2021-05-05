@@ -18,11 +18,10 @@ class WorkerController extends Controller
      */
     function __construct()
     {
-        $this->middleware('permission:worker-list', ['only' => ['index']]);
-        $this->middleware('permission:worker-create', ['only' => ['index', 'create']]);
-        $this->middleware('permission:worker-edit', ['only' => ['index', 'update']]);
+        $this->middleware('permission:worker-create', ['only' => ['create']]);
+        $this->middleware('permission:worker-edit', ['only' => ['index', 'update','show']]);
         $this->middleware('permission:contract-edit', ['only' => ['download']]);
-        $this->middleware('permission:worker-delete', ['only' => ['index', 'destroy']]);
+        $this->middleware('permission:worker-delete', ['only' => ['destroy']]);
     }
 
     /**
@@ -31,6 +30,15 @@ class WorkerController extends Controller
     public function index()
     {
         return $this->answer('', '');
+    }
+
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function show($id)
+    {
+        $worker = Worker::where('id',$id)->with('post.works.work', 'contracts.post','allOrders')->get();
+        return view('workers.show',['worker'=>$worker]);
     }
 
     /**
@@ -126,7 +134,7 @@ class WorkerController extends Controller
      */
     public static function answer($res, $message)
     {
-        $workers = Worker::with('post.works.work', 'contracts.post')->get();
+        $workers = Worker::with('post.works.work', 'contracts.post','orders')->get();
         $posts = Post::get();
         $works = Work::get();
         if ($res == '' and $message == '') {

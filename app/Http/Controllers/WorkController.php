@@ -15,9 +15,9 @@ class WorkController extends Controller
      */
     function __construct()
     {
-        $this->middleware('permission:work-list', ['only' => ['index']]);
-        $this->middleware('permission:work-create', ['only' => ['create']]);
-        $this->middleware('permission:work-edit', ['only' => ['update','updateWorkPost','index']]);
+        $this->middleware('permission:work-list', ['only' => ['getWorker']]);
+        $this->middleware('permission:work-create', ['only' => ['create','createWorkPost']]);
+        $this->middleware('permission:work-edit', ['only' => ['index','update','updateWorkPost','index']]);
         $this->middleware('permission:work-delete', ['only' => ['destroy']]);
     }
 

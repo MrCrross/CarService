@@ -11,7 +11,8 @@ class OrderMaterial extends Model
 
     protected $fillable = [
         'order_id',
-        'material_id'
+        'material_id',
+        'count'
     ];
 
     public function order(){

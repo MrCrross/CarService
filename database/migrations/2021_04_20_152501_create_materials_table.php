@@ -17,6 +17,7 @@ class CreateMaterialsTable extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->double('price')->unsigned();
+            $table->integer('count')->unsigned();
             $table->timestamps();
         });
     }

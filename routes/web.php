@@ -36,15 +36,24 @@ Route::group(['middleware' => ['auth']], function() {
     Route::group(['middleware'=>['permission:order-list']],function(){
         Route::get('orders', [OrderController::class, 'index'])->name('orders.index');
         Route::post('orders', [OrderController::class, 'create']);
+        Route::get('orders/{id}', [OrderController::class, 'show'])->name('orders.show');
 
         Route::post('orders/cars', [CustomerController::class, 'getCar']);
         Route::post('customer/create', [CustomerController::class, 'jsonCreate']);
+        Route::post('car/create', [CarController::class, 'jsonCreate']);
         Route::post('orders/workers', [WorkController::class, 'getWorker']);
 
-        Route::post('materials', [MaterialController::class, 'create']);
+        Route::post('material/create', [MaterialController::class, 'createOrder']);
     });
 
-    Route::group(['middleware'=>['permission:customer-list']],function(){
+    Route::group(['middleware'=>['permission:material-edit']],function(){
+        Route::get('materials', [MaterialController::class, 'index'])->name('materials.index');
+        Route::post('materials', [MaterialController::class, 'create']);
+        Route::patch('materials', [MaterialController::class, 'update']);
+        Route::delete('materials', [MaterialController::class, 'destroy']);
+    });
+
+    Route::group(['middleware'=>['permission:customer-edit']],function(){
         Route::get('customers', [CustomerController::class,'index'])->name('customers.index');
         Route::post('customers', [CustomerController::class,'create']);
         Route::patch('customers', [CustomerController::class,'update']);
@@ -58,14 +67,15 @@ Route::group(['middleware' => ['auth']], function() {
         Route::delete('cars', [CarController::class,'destroy']);
     });
 
-    Route::group(['middleware'=>['permission:worker-list']],function(){
+    Route::group(['middleware'=>['permission:worker-edit']],function(){
         Route::get('workers', [WorkerController::class,'index'])->name('workers.index');
+        Route::get('workers/{id}', [WorkerController::class,'show'])->name('workers.show');
         Route::put('workers', [WorkerController::class,'download']);
         Route::post('workers', [WorkerController::class,'create']);
         Route::patch('workers', [WorkerController::class,'update']);
         Route::delete('workers', [WorkerController::class,'destroy']);
 
-        Route::group(['middleware'=>['permission:work-list']],function(){
+        Route::group(['middleware'=>['permission:work-edit']],function(){
             Route::get('works', [WorkController::class,'index'])->name('workers.works');
             Route::post('works-posts', [WorkController::class,'createWorkPost']);
             Route::patch('works-posts', [WorkController::class,'updateWorkPost']);

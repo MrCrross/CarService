@@ -12,8 +12,7 @@ class OrderComposition extends Model
     protected $fillable = [
         'order_id',
         'worker_id',
-        'work_id',
-        'customer_id'
+        'work_id'
     ];
 
     public function order(){
@@ -26,10 +25,6 @@ class OrderComposition extends Model
 
     public function work(){
         return $this->belongsTo(Work::class);
-    }
-
-    public function customer(){
-        return $this->belongsTo(Customer::class);
     }
 
 }

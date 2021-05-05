@@ -17,7 +17,7 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+        <nav class="navbar navbar-expand-md navbar-light navbar-laravel bg-menu">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Автосервис') }}
@@ -35,18 +35,40 @@
                             @can('order-list')
                                 <li><a class="nav-link" href="{{ route('orders.index') }}">Заказы</a></li>
                             @endcan
-                            @can('customer-edit')
-                                <li><a class="nav-link" href="{{ route('customers.index') }}">Клиенты</a></li>
+                            @can(['customer-edit','worker-edit','material-edit'])
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        База <span class="caret"></span>
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        @can('customer-edit')
+                                            <li><a class="nav-link" href="{{ route('customers.index') }}">Клиенты</a></li>
+                                        @endcan
+                                        @can('worker-edit')
+                                            <li><a class="nav-link" href="{{ route('workers.index') }}">Сотрудники</a></li>
+                                        @endcan
+                                        @can('material-edit')
+                                            <li><a class="nav-link" href="{{ route('materials.index') }}">Материалы</a></li>
+                                        @endcan
+                                    </ul>
+                                </li>
                             @endcan
-                            @can('worker-edit')
-                                <li><a class="nav-link" href="{{ route('workers.index') }}">Сотрудники</a></li>
+                            @can(['user-list','role-list'])
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Пользователи <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    @can('role-list')
+                                        <li><a class="dropdown-item nav-link" href="{{ route('roles.index') }}">Роли</a></li>
+                                    @endcan
+                                    @can('user-list')
+                                        <li><a class="dropdown-item nav-link" href="{{ route('users.index') }}">Пользователи</a></li>
+                                    @endcan
+                                </ul>
+                            </li>
                             @endcan
-                            @can('role-list')
-                                <li><a class="nav-link" href="{{ route('roles.index') }}">Роли</a></li>
-                            @endcan
-                            @can('user-list')
-                                <li><a class="nav-link" href="{{ route('users.index') }}">Пользователи</a></li>
-                            @endcan
+
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>

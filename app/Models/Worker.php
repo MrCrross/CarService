@@ -26,6 +26,10 @@ class Worker extends Model
     }
 
     public function orders(){
-        return $this->hasMany(Order::class);
+        return $this->hasMany(OrderComposition::class)->latest()->select('order_id','worker_id')->limit(5)->groupBy('order_id','worker_id');
+    }
+
+    public function allOrders(){
+        return $this->hasMany(OrderComposition::class)->latest()->select('order_id','worker_id')->groupBy('order_id','worker_id');
     }
 }

@@ -18,6 +18,21 @@ function editHandler(item) {
     item.parentNode.querySelector('.input-group').classList.toggle('visually-hidden')
 }
 
+function print(){
+    const print = document.getElementById('print').cloneNode(true)
+    print.querySelector('#create').remove()
+    print.querySelectorAll('.car-edit').forEach(function (item){
+        item.remove()
+    })
+    print.querySelectorAll('.input-group').forEach(function (item){
+        item.remove()
+    })
+    print.querySelectorAll('.btns').forEach(function (item){
+        item.remove()
+    })
+    CallPrint(print.innerHTML)
+}
+
 function init() {
     edits.forEach(function(item) {
         item.addEventListener('click', () => { editHandler(item) })

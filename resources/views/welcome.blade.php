@@ -1,28 +1,29 @@
 @extends('layouts.app')
 @section('content')
 <div class="container-fluid">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header text-center"><h1>{{ 'Добро пожаловать в '.config('app.name', 'Автосервис') }}</h1></div>
-                <div class="card-body">
-                    <h2>Ваших прав достаточно, чтобы посетить следующие страницы:</h2>
-                    @can('order-list')
-                        <h3><a class="nav-link" href="{{ route('orders.index') }}">Выполнить заказ</a></h3>
-                    @endcan
-                    @can('customer-list')
-                        <h3><a class="nav-link" href="{{ route('customers.index') }}">Управлять клиентской базой</a></h3>
-                    @endcan
-                    @can('worker-list')
-                        <h3><a class="nav-link" href="{{ route('workers.index') }}">Управлять сотрудниками</a></h3>
-                    @endcan
-                    @can('role-list')
-                        <h3><a class="nav-link" href="{{ route('roles.index') }}">Управлять ролями</a></h3>
-                    @endcan
-                    @can('user-list')
-                        <h3><a class="nav-link" href="{{ route('users.index') }}">Управлять пользователями</a></h3>
-                    @endcan
-                </div>
+    <div class="card">
+        <div class="card-header text-center"><h1>{{ 'Добро пожаловать в '.config('app.name', 'Автосервис') }}</h1></div>
+        <div class="card-body">
+            <h3>Ваших прав достаточно, чтобы выполнить следующее:</h3>
+            <div class="btn-group btn-group-sm">
+                @can('order-list')
+                    <a class="btn btn-sm btn-outline-primary" href="{{ route('orders.index') }}">Выполнить заказ</a>
+                @endcan
+                @can('customer-edit')
+                    <a class="btn btn-sm btn-outline-primary" href="{{ route('customers.index') }}">Управлять клиентской базой</a>
+                @endcan
+                @can('worker-edit')
+                    <a class="btn btn-sm btn-outline-primary" href="{{ route('workers.index') }}">Управлять сотрудниками</a>
+                @endcan
+                @can('material-edit')
+                    <a class="btn btn-sm btn-outline-primary" href="{{ route('materials.index') }}">Управлять материалами</a>
+                @endcan
+                @can('role-list')
+                    <a class="btn btn-sm btn-outline-primary" href="{{ route('roles.index') }}">Управлять ролями</a>
+                @endcan
+                @can('user-list')
+                    <a class="btn btn-sm btn-outline-primary" href="{{ route('users.index') }}">Управлять пользователями</a>
+                @endcan
             </div>
         </div>
     </div>
