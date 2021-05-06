@@ -483,10 +483,8 @@
                         <input class="form-control" name="firm_name" value="" required readonly pattern="[А-Яа-яЁёЕеA-Za-z\.\s]*">
                         <span class="firmModal-edit">&#128393;</span>
                     </div>
-
                     <label for="name">Изменить название модели</label>
                     <input class="form-control" name="name" value="" required pattern="^[А-Яа-яЁёЕе\x1F-\xBF]*">
-
                     <label for="year">Изменить год выпуска</label>
                     <input class="form-control" name="year" value="" required pattern="[0-9]{4,}">
                 </div>
