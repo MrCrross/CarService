@@ -62,10 +62,10 @@
                                         <span class="visFirm"><img class="icon" src="{{asset('image/plus.svg')}}" alt="Добавить новую фирму" ></span>
                                     </div>
                                     <div id="newFirm" class="input-group visually-hidden">
-                                        <input class="form-control" type="text" name='firm_name' placeholder="Введите название фирмы автомобиля" pattern="[А-Яа-яA-Za-z\.\s]*">
+                                        <input class="form-control" type="text" name='firm_name' placeholder="Введите название фирмы автомобиля" pattern="[А-Яа-яЁёЕеA-Za-z\.\s]*">
                                         <span class="visFirm"><img class="icon" src="{{asset('image/back.svg')}}" alt="Выбрать фирму" ></span>
                                     </div>
-                                    <input class="form-control" type="text" name='model_name' placeholder="Введите название модели автомобиля" pattern="^[\x1F-\xBF]*">
+                                    <input class="form-control" type="text" name='model_name' placeholder="Введите название модели автомобиля" pattern="^[А-Яа-яЁёЕе\x1F-\xBF]*">
                                     <input class="form-control" type="text" name='model_year' placeholder="Введите год выпуска автомобиля" pattern="[0-9]{4}">
                                     <span class="visModel"><img class="icon" src="{{asset('image/back.svg')}}" alt="Выбрать модель" ></span>
                                 </div>
@@ -135,10 +135,10 @@
                                             <span class="visFirm"><img class="icon" src="{{asset('image/plus.svg')}}" alt="Добавить новую фирму" ></span>
                                         </div>
                                         <div id="newFirm" class="input-group visually-hidden">
-                                            <input class="form-control" type="text" name='firm_name' placeholder="Введите название фирмы автомобиля" pattern="[А-Яа-яA-Za-z\.\s]*">
+                                            <input class="form-control" type="text" name='firm_name' placeholder="Введите название фирмы автомобиля" pattern="[А-Яа-яЁёЕеA-Za-z\.\s]*">
                                             <span class="visFirm"><img class="icon" src="{{asset('image/back.svg')}}" alt="Выбрать фирму" ></span>
                                         </div>
-                                        <input class="form-control" type="text" name='model_name' placeholder="Введите название модели автомобиля" pattern="^[\x1F-\xBF]*">
+                                        <input class="form-control" type="text" name='model_name' placeholder="Введите название модели автомобиля" pattern="^[А-Яа-яЁёЕе\x1F-\xBF]*">
                                         <input class="form-control" type="text" name='model_year' placeholder="Введите год выпуска автомобиля" pattern="[0-9]{4}">
                                         <span class="visModel"><img class="icon" src="{{asset('image/back.svg')}}" alt="Выбрать модель" ></span>
                                     </div>
@@ -191,7 +191,7 @@
                                         <img class="icon" src="{{asset('image/plus.svg')}}" alt="Добавить фирму" data-toggle="modal" data-target="#addFirm">
                                     </div>
                                 </td>
-                                <td><input class="form-control" type="text" name='name' placeholder="Введите название модели автомобиля" pattern="^[\x1F-\xBF]*"></td>
+                                <td><input class="form-control" type="text" name='name' placeholder="Введите название модели автомобиля" pattern="^[А-Яа-яЁёЕе\x1F-\xBF]*"></td>
                                 <td><input class="form-control" type="text" name='year' placeholder="Введите год выпуска автомобиля" pattern="[0-9]{4}"></td>
                             </tr>
                             </tbody>
@@ -227,7 +227,7 @@
                         </thead>
                         <tbody>
                         <tr>
-                            <td><input class="form-control" type="text" name='name' placeholder="Введите название фирмы автомобиля" pattern="[А-Яа-яA-Za-z\.\s]*"></td>
+                            <td><input class="form-control" type="text" name='name' placeholder="Введите название фирмы автомобиля" pattern="[А-Яа-яЁёЕеA-Za-z\.\s]*"></td>
                         </tr>
                         </tbody>
                     </table>
@@ -433,6 +433,68 @@
                     {{ Form::submit('Удалить',array('class'=>'btn btn-danger'))}}
                     {{ Form::close() }}
                 </div>
+            </div>
+        </div>
+    </div>
+@endcan
+
+{{-- Modal edit firm--}}
+@can('firm-edit')
+    <div class="modal fade" id="editFirm" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Редактировать название фирмы</h5>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                {{ Form::open(array('action' => 'App\Http\Controllers\CarController@updateFirm','method'=>'patch','id'=>'form-firm-edit')) }}
+                <div class="modal-body">
+                    <input class="visually-hidden" name="id" value="" readonly required>
+                    <label for="name">Изменить название фирмы</label>
+                    <input class="form-control" name="name" value="" required pattern="[А-Яа-яЁёЕеA-Za-z\.\s]*">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                    {{ Form::submit('Изменить',array('class'=>'btn btn-primary'))}}
+                </div>
+                {{ Form::close() }}
+            </div>
+        </div>
+    </div>
+@endcan
+
+{{-- Modal edit model--}}
+@can('model-edit')
+    <div class="modal fade" id="editModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Редактировать модель</h5>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                {{ Form::open(array('action' => 'App\Http\Controllers\CarController@updateModel','method'=>'patch','id'=>'form-model-edit')) }}
+                <div class="modal-body">
+                    <input class="visually-hidden" name="id" value="" readonly required>
+                    <input class="visually-hidden" name="firm_id" value="" readonly required>
+                    <label for="name">Изменить фирму</label>
+                    <div class="input-group">
+                        <input class="form-control" name="firm_name" value="" required readonly pattern="[А-Яа-яЁёЕеA-Za-z\.\s]*">
+                        <span class="firmModal-edit">&#128393;</span>
+                    </div>
+
+                    <label for="name">Изменить название модели</label>
+                    <input class="form-control" name="name" value="" required pattern="^[А-Яа-яЁёЕе\x1F-\xBF]*">
+
+                    <label for="year">Изменить год выпуска</label>
+                    <input class="form-control" name="year" value="" required pattern="[0-9]{4,}">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                    {{ Form::submit('Изменить',array('class'=>'btn btn-primary'))}}
+                </div>
+                {{ Form::close() }}
             </div>
         </div>
     </div>

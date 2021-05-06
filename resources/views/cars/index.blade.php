@@ -54,7 +54,9 @@
                     @endforeach
                 </select>
                 @can('model-edit')
-                    <span class="input-group-text" data-toggle="modal" data-target="#addModel">&#128393;</span>
+                    <span class="input-group-text" data-toggle="modal" data-target="#addModel">
+                        <img src="{{asset('image/auto-plus.svg')}}" alt="Добавить модель" class="icon-sm">
+                    </span>
                 @endcan
             </div>
         </td>
@@ -89,18 +91,16 @@
             @can('model-edit')
             <span class="car-edit">&#128393;</span>
             <div class="input-group visually-hidden">
-                <select class="form-select" name="model">
-                    @foreach ($models as $model)
-                        @if ($model->id == $car->model->id)
-                        <option value="{{$model->id}}" selected>{{$model->firm->name.' '.$model->name.' '.$model->year_release}}</option>
-                        @else
-                        <option value="{{$model->id}}">{{$model->firm->name.' '.$model->name.' '.$model->year_release}}</option>
-                        @endif
-                    @endforeach
-                </select>
-                @can('model-create')
-                <span class="input-group-text" data-toggle="modal" data-target="#addModel">&#128393;</span>
+                <span data-id="{{$car->model->firm->id}}">{{$car->model->firm->name}}</span>
+                @can('firm-edit')
+                    <span class="firm-edit" data-toggle="modal" data-target="#editFirm">&#128393;</span>
                 @endcan
+                <div class="input-group">
+                    <span data-id="{{$car->model->id}}" data-year="{{$car->model->year_release}}" >{{$car->model->name}}</span>
+                    @can('model-edit')
+                        <span class="model-edit" data-toggle="modal" data-target="#editModel">&#128393;</span>
+                    @endcan
+                </div>
             </div>
             @endcan</td>
         <td>

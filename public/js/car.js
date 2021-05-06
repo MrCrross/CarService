@@ -33,7 +33,49 @@ function print(){
     CallPrint(print.innerHTML)
 }
 
+function firmEditHandler(item){
+    const form = document.getElementById('form-firm-edit')
+    const idInput = form.querySelector('input[name="id"]')
+    const nameInput = form.querySelector('input[name="name"]')
+    const firm = item.parentNode.querySelector('span[data-id]')
+    const id = firm.dataset.id
+    const name =firm.innerHTML
+    idInput.value = id
+    nameInput.value = name
+}
+
+function modelEditHandler(item){
+    const form = document.getElementById('form-model-edit')
+    const idInput = form.querySelector('input[name="id"]')
+    const idFirmInput = form.querySelector('input[name="firm_id"]')
+    const nameFirmInput = form.querySelector('input[name="firm_name"]')
+    const nameInput = form.querySelector('input[name="name"]')
+    const yearInput = form.querySelector('input[name="year"]')
+    const firm = item.parentNode.parentNode.querySelector('span[data-id]')
+    const model = item.parentNode.querySelector('span[data-id]')
+    idInput.value = model.dataset.id
+    idFirmInput.value = firm.dataset.id
+    nameInput.value = model.innerHTML
+    nameFirmInput.value = firm.innerHTML
+    yearInput.value=model.dataset.year
+}
+
+function firmModalEditHandler(e){
+    const firm = e.target.parentNode.querySelector('input[name="firm_name"]')
+    firm.readOnly= firm.readOnly ? false : true
+}
+
 function init() {
+    const editFirm = document.querySelectorAll('.firm-edit')
+    const editModel = document.querySelectorAll('.model-edit')
+    const editFirmModal = document.querySelector('.firmModal-edit')
+    editFirmModal.addEventListener('click',firmModalEditHandler)
+    editFirm.forEach(function (item){
+        item.addEventListener('click',()=> firmEditHandler(item))
+    })
+    editModel.forEach(function (item){
+        item.addEventListener('click',()=> modelEditHandler(item))
+    })
     edits.forEach(function(item) {
         item.addEventListener('click', () => { editHandler(item) })
     })

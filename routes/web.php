@@ -70,7 +70,9 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get('cars', [CarController::class,'index'])->name('cars.index');
         Route::post('cars', [CarController::class,'create']);
         Route::post('models', [CarController::class,'createModel']);
+        Route::patch('models', [CarController::class,'updateModel']);
         Route::post('firms', [CarController::class,'createFirm']);
+        Route::patch('firms', [CarController::class,'updateFirm']);
         Route::patch('cars', [CarController::class,'update']);
         Route::delete('cars', [CarController::class,'destroy']);
     });
