@@ -5,7 +5,7 @@
 <div class="row">
     <div class="col-lg-12 margin-tb">
         <div class="float-start">
-            <h2>Создать пользователя</h2>
+            <h2>Зарегистрировать пользователя</h2>
         </div>
         <div class="float-end">
             <a class="btn btn-primary" href="{{ route('users.index') }}"> Назад</a>

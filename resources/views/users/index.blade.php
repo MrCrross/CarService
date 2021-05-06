@@ -1,6 +1,5 @@
 @extends('layouts.app')
 
-
 @section('content')
 <div class="row">
     <div class="col-lg-12 margin-tb">
@@ -8,18 +7,16 @@
             <h2>Управление пользователями</h2>
         </div>
         <div class="float-end">
-            <a class="btn btn-success" href="{{ route('users.create') }}">Создать пользователя</a>
+            <a class="btn btn-success" href="{{ route('users.create') }}">Зарегистрировать пользователя</a>
         </div>
     </div>
 </div>
-
 
 @if ($message = Session::get('success'))
 <div class="alert alert-success">
   <p>{{ $message }}</p>
 </div>
 @endif
-
 
 <table class="table table-bordered">
  <tr>

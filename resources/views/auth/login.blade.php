@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container w-50">
+<div class="container w-75">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -12,14 +12,13 @@
                         @csrf
 
                         <div class="form-group row mb-2">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('E-Mail') }}</label>
+                            <label for="name" class="col-md-4 control-label text-md-end">{{ __('Логин') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                                @error('email')
+                                <input id="name" type="name" class="form-control  @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autofocus>
+                                @error('name')
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                                        <strong>{{ $errors->first('name') }}</strong>
                                     </span>
                                 @enderror
                             </div>
