@@ -38,6 +38,12 @@ Route::group(['middleware' => ['auth']], function() {
         Route::post('orders', [OrderController::class, 'create']);
         Route::get('orders/{id}', [OrderController::class, 'show'])->name('orders.show');
 
+        Route::group(['middleware'=>['permission:order-edit']],function(){
+            Route::get('order/calc', [OrderController::class, 'calc'])->name('orders.calc');
+            Route::post('order/calc', [OrderController::class, 'getCalc']);
+            Route::post('order/search', [OrderController::class, 'search']);
+        });
+
         Route::post('orders/cars', [CustomerController::class, 'getCar']);
         Route::post('customer/create', [CustomerController::class, 'jsonCreate']);
         Route::post('car/create', [CarController::class, 'jsonCreate']);

@@ -64,7 +64,7 @@
                     @endcan
                     @can('order-list')
                         <td>
-                            @foreach($worker[0]->allOrders as $order)
+                            @foreach($worker[0]->orders as $order)
                                 <a class="badge bg-success" href="/orders/{{$order->order_id}}">№ {{$order->order_id}}</a>
                             @endforeach
                         </td>

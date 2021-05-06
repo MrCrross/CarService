@@ -63,6 +63,9 @@ function print() {
     print.querySelectorAll('.worker-edit').forEach(function (item){
         item.remove()
     })
+    print.querySelectorAll('.download').forEach(function (item){
+        item.remove()
+    })
     print.querySelectorAll('.work-edit').forEach(function (item){
         item.remove()
     })
@@ -214,6 +217,10 @@ function reloadTable(table,item,posts,key){
     phone.innerHTML = item.phone
     phoneInput.value=item.phone
     post.innerHTML = item.post.name
+    const option = document.createElement('option')
+    option.value = ""
+    option.innerHTML="Выберите должность"
+    postSel.append(option)
     posts.forEach(function (it){
         const option = document.createElement('option')
         option.value = it.id

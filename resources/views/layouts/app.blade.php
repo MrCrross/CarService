@@ -50,6 +50,9 @@
                                         @can('material-edit')
                                             <li><a class="nav-link" href="{{ route('materials.index') }}">Материалы</a></li>
                                         @endcan
+                                        @can('order-edit')
+                                            <li><a class="nav-link" href="{{ route('orders.calc') }}">Доходы</a></li>
+                                        @endcan
                                     </ul>
                                 </li>
                             @endcan

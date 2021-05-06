@@ -265,11 +265,12 @@
                             <span class="worker-edit">&#128393;</span>
                             <div class="input-group visually-hidden">
                                 <select class="form-select" name="post">
+                                    <option value="" selected>Выберите должность</option>
                                     @foreach ($posts as $post)
                                         <option value="{{$post->id}}">{{$post->name}}</option>
                                     @endforeach
                                 </select>
-                                {{Form::file('contract',['class'=>'form-control','accept'=>'.pdf,.doc,.docx'])}}
+                                {!! Form::file('contract',['class'=>'form-control','accept'=>'.pdf,.doc,.docx']) !!}
                             </div>
                         @endcan
                     </td>
@@ -310,8 +311,12 @@
                 @endcan
                 @can('order-list')
                     <td>
-                        @foreach($worker->orders as $order)
-                            <a class="btn-sm link-dark" href="/orders/{{$order->order_id}}">№ {{$order->order_id}}</a>
+                        @foreach($worker->orders as $key=>$order)
+                            @if($key<=4)
+                                <a class="btn-sm link-dark" href="/orders/{{$order->order_id}}">№ {{$order->order_id}}</a>
+                            @else
+                                @break
+                            @endif
                         @endforeach
                         <a class="btn-sm link-dark"  href="/workers/{{$worker->id}}">...</a>
                     </td>
@@ -326,9 +331,9 @@
                         @endcan
                     </div>
                 </td>
+                {{ Form::close() }}
             </tr>
         @endforeach
-        {{ Form::close() }}
     </table>
 </div>
     @include('layouts.modal')

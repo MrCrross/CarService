@@ -56,7 +56,7 @@ class WorkerController extends Controller
      */
     public function show($id)
     {
-        $worker = Worker::where('id',$id)->with('post.works.work', 'contracts.post','allOrders')->get();
+        $worker = Worker::where('id',$id)->with('post.works.work', 'contracts.post','orders')->get();
         return view('workers.show',['worker'=>$worker]);
     }
 
@@ -79,7 +79,6 @@ class WorkerController extends Controller
      */
     public function update(Request $request)
     {
-        dd($request->file('contract'));
         try {
             Worker::where('id', $request->id)->update([
                 'first_name' => $request->first_name,
@@ -87,7 +86,7 @@ class WorkerController extends Controller
                 'father_name' => $request->father_name,
                 'phone' => $request->phone
             ]);
-            if (isset($request->post) && isset($request->contract)) {
+            if (isset($request->post) && $request->file('contract')!==null) {
                 $validator = Validator::make(
                     ['file' => $request->file('contract')],
                     [
