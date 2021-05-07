@@ -47,6 +47,9 @@
                                         @can('worker-edit')
                                             <li><a class="nav-link" href="{{ route('workers.index') }}">Сотрудники</a></li>
                                         @endcan
+                                        @can('work-edit')
+                                            <li><a class="nav-link" href="{{ route('workers.works') }}">Работы</a></li>
+                                        @endcan
                                         @can('material-edit')
                                             <li><a class="nav-link" href="{{ route('materials.index') }}">Материалы</a></li>
                                         @endcan

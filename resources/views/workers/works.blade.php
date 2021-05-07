@@ -16,7 +16,7 @@
     <div class="row">
         <div class="col-lg-12 mb-2">
             <div class="float-start">
-                <h2>Должности работы
+                <h2>Должностные работы
                     @can('worker-print')
                         <button class="btn" onclick="print()"><img class="icon-sm" src="{{asset('image/print.svg')}}" alt="Распечатать"></button>
                     @endcan
@@ -59,6 +59,7 @@
                                     {{ Form::checkbox('works[]', $work->id,true,['class'=>'form-check-input'])}}
                                 @endif
                                 {{ Form::label('works',$work->name,['class'=>'form-check-label','data-id'=>$work->id,'data-price'=>$work->price])}}
+                                    <span> ({{$work->price}} руб.)</span>
                                 @can('work-edit')
                                     <span class="work-edit" data-toggle="modal"
                                           data-target="#editWork">&#128393;</span>

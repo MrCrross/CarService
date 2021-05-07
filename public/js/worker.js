@@ -258,29 +258,39 @@ function reloadTable(table,item,posts,key){
 function init() {
     const table = document.getElementById('t-worker')
     const search = document.getElementById('btnSearch')
-    search.addEventListener('click',searchHandler)
-    table.addEventListener('click',function (e){
-        if(e.target && e.target.matches('.worker-edit')){
-            editHandler(e.target)
-        }
-        if(e.target && e.target.matches('.work-edit')){
-            editWorkHandler(e.target)
-        }
-        if(e.target && e.target.matches('.worker-delete')){
-            deleteHandler(e.target)
-        }
-        if(e.target && e.target.matches('.post-delete')){
-            deletePostHandler(e.target)
-        }
-        if(e.target && e.target.matches('.work-delete')){
-            deleteWorkHandler(e.target)
-        }
-        if(e.target && e.target.matches('.submit')){
-            submitHandler(e.target)
-        }
-        if(e.target && e.target.matches('.download')){
-            downloadHandler(e.target)
-        }
+    const workEdit = document.querySelectorAll('.work-edit')
+    const workDelete = document.querySelectorAll('.work-delete')
+    if(search) search.addEventListener('click',searchHandler)
+    if(table){
+        table.addEventListener('click',function (e){
+            if(e.target && e.target.matches('.worker-edit')){
+                editHandler(e.target)
+            }
+            if(e.target && e.target.matches('.work-edit')){
+                editWorkHandler(e.target)
+            }
+            if(e.target && e.target.matches('.worker-delete')){
+                deleteHandler(e.target)
+            }
+            if(e.target && e.target.matches('.post-delete')){
+                deletePostHandler(e.target)
+            }
+            if(e.target && e.target.matches('.work-delete')){
+                deleteWorkHandler(e.target)
+            }
+            if(e.target && e.target.matches('.submit')){
+                submitHandler(e.target)
+            }
+            if(e.target && e.target.matches('.download')){
+                downloadHandler(e.target)
+            }
+        })
+    }
+    if(workEdit) workEdit.forEach(function (item){
+        item.addEventListener('click', ()=>editWorkHandler(item))
+    })
+    if(workDelete) workDelete.forEach(function (item){
+        item.addEventListener('click', ()=>deleteWorkHandler(item))
     })
 }
 
