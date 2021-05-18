@@ -78,7 +78,7 @@
             @can('customer-edit')
                 <span class="customer-edit">&#128393;</span>
                 <div class="input-group visually-hidden">
-                    <input class="form-control" name="phone" type="text" value="" pattern="^[0-9]+{11,}">
+                    <input class="form-control" name="phone" type="text" value="" pattern="[0-9]{11}" maxlength="11" minlength="11">
                     {{Form::submit('&#10003;',array('class'=>'input-group-text btn btn-primary'))}}
                 </div>
             @endcan</td>
@@ -120,7 +120,7 @@
             <input class="form-control" name="father_name" type="text" pattern="^[A-Za-zА-Яа-яЁё]+$" placeholder="Введите отчество клиента" required>
         </td>
         <td>
-            <input class="form-control" name="phone" type="text" pattern="^[0-9]+{11,}" placeholder="Введите номер телефона клиента" required>
+            <input class="form-control" name="phone" type="text" pattern="[0-9]{11}" maxlength="11" minlength="11" placeholder="Введите номер телефона клиента" required>
         </td>
         <td>
             <div class="input-group">
@@ -173,7 +173,7 @@
             @can('customer-edit')
             <span class="customer-edit">&#128393;</span>
             <div class="input-group visually-hidden">
-                <input class="form-control" name="phone" type="text"  value="{{ $customer->phone }}" pattern="^[0-9]+{11,}">
+                <input class="form-control" name="phone" type="text"  value="{{ $customer->phone }}" pattern="[0-9]{11}" maxlength="11" minlength="11">
                 {{Form::submit('&#10003;',array('class'=>'input-group-text btn btn-primary'))}}
             </div>
             @endcan</td>

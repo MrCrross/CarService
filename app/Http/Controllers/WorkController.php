@@ -87,25 +87,15 @@ class WorkController extends Controller
     public function updateWorkPost(Request $request)
     {
         try{
-            $works= WorkHasPost::where('post_id',$request->id)->get()->toArray();
-            $reqwork=$request->works;
-            foreach ($works as $work){
-                if(array_search($work['work_id'],$reqwork) === false){
-                    WorkHasPost::where('post_id',$request->id)
-                        ->where('work_id',$work['work_id'])
-                        ->delete();
-                }else{
-                    array_splice($reqwork,array_search($work['work_id'],$reqwork),1);
-                }
-            }
-            foreach ($reqwork as $work){
+            WorkHasPost::where('post_id',$request->id)->delete();
+            foreach ($request->works as $work){
                 WorkHasPost::create([
                     'post_id'=>$request->id,
                     'work_id'=>$work
                 ]);
             }
         }catch(QueryException $e){
-            return  WorkerController::answer('error','Ошибка. Введенные данные некорректные');
+            return  WorkerController::answer('error','Ошибка. Введенные данные некорректные '.$e);
         }
         return WorkerController::answer('success','Данные обновлены успешно');
     }

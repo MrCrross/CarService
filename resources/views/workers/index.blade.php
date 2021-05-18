@@ -106,7 +106,7 @@
                     <span class="worker-edit">&#128393;</span>
                     <div class="input-group visually-hidden">
                         <input class="form-control" name="phone" type="text" value=""
-                               pattern="^[0-9]+$">
+                               pattern="[0-9]{11}" maxlength="11" minlength="11">
                         {{Form::submit('&#10003;',array('class'=>'btn btn-primary'))}}
                     </div>
                 @endcan</td>
@@ -188,7 +188,7 @@
                 </td>
                 <td colspan="2">
                     <input class="form-control" name="phone" type="text" pattern="[0-9]{11}"
-                           placeholder="Введите номер телефона сотрудника" required>
+                           placeholder="Введите номер телефона сотрудника" minlength="11" maxlength="11" required>
                 </td>
                 <td colspan="3">
                     <div class="input-group">
@@ -254,7 +254,7 @@
                         <span class="worker-edit">&#128393;</span>
                         <div class="input-group visually-hidden">
                             <input class="form-control" name="phone" type="text" value="{{ $worker->phone }}"
-                                   pattern="^[0-9]+$">
+                                   pattern="[0-9]{11}" maxlength="11" minlength="11">
                             {{Form::submit('&#10003;',array('class'=>'btn btn-primary'))}}
                         </div>
                     @endcan</td>

@@ -35,7 +35,7 @@
                             @can('order-list')
                                 <li><a class="nav-link" href="{{ route('orders.index') }}">Заказы</a></li>
                             @endcan
-                            @can(['customer-edit','worker-edit','material-edit'])
+                            @canany(['customer-edit','worker-edit','material-edit'])
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         База <span class="caret"></span>
@@ -58,8 +58,8 @@
                                         @endcan
                                     </ul>
                                 </li>
-                            @endcan
-                            @can(['user-list','role-list'])
+                            @endcanany
+                            @canany(['user-list','role-list'])
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Пользователи <span class="caret"></span>
@@ -73,7 +73,7 @@
                                     @endcan
                                 </ul>
                             </li>
-                            @endcan
+                            @endcanany
 
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

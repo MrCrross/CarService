@@ -39,7 +39,7 @@
                                 <input class="form-control" name="father_name" type="text" pattern="^[A-Za-zА-Яа-яЁё]+$" placeholder="Введите отчество клиента" required>
                             </td>
                             <td class="w-15">
-                                <input class="form-control" name="phone" type="text" pattern="^[0-9]{11,}" placeholder="Введите номер телефона клиента" required>
+                                <input class="form-control" name="phone" type="text" pattern="[0-9]{11}" maxlength="11" minlength="11" placeholder="Введите номер телефона клиента" required>
                             </td>
                             <td class="w-50">
                                 <div class="input-group">
@@ -563,7 +563,7 @@
                             <td><input class="form-control" type="text" name='name'
                                        placeholder="Введите название работы" pattern="^[А-Яа-яЕеЁё0-9\s]*"></td>
                             <td><input class="form-control" type="number" name='price'
-                                       placeholder="Введите стоимость работы" pattern="^[0-9]+$" min=0 step="100">
+                                       placeholder="Введите стоимость работы" pattern="^[0-9]+$" min="1" step="1">
                             </td>
                         </tr>
                         </tbody>
@@ -608,7 +608,7 @@
                             </td>
                             <td>
                                 <input class="form-control" type="number" name='price'
-                                       placeholder="Введите стоимость работы" pattern="^[0-9]+$" min=0 step="100">
+                                       placeholder="Введите стоимость работы" pattern="^[0-9]+$" min="1" step="1">
                             </td>
                         </tr>
                         </tbody>
@@ -654,11 +654,11 @@
                             </td>
                             <td>
                                 <input class="form-control" type="number" name='price'
-                                       placeholder="Введите стоимость материала" pattern="^[0-9]+$" min=1>
+                                       placeholder="Введите стоимость материала" pattern="^[0-9]+$" min="1">
                             </td>
                             <td>
                                 <input class="form-control" type="number" name='count'
-                                       placeholder="Введите стоимость материала" pattern="^[0-9]+$" min=1>
+                                       placeholder="Введите стоимость материала" pattern="^[0-9]+$" min="1">
                             </td>
                         </tr>
                         </tbody>

@@ -83,9 +83,9 @@
                         @endcan
                     </div>
                 </td>
+                {{ Form::close() }}
             </tr>
         @endforeach
-        {{ Form::close() }}
     </table>
 </div>
     @include('layouts.modal')
