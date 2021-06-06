@@ -18,7 +18,7 @@
             <div class="float-start">
                 <h2>Должностные работы
                     @can('worker-print')
-                        <button class="btn" onclick="print()"><img class="icon-sm" src="{{asset('image/print.svg')}}" alt="Распечатать"></button>
+                        <button class="btn" onclick="print()" title="Распечатать"><img class="icon-sm" src="{{asset('image/print.svg')}}" title="Распечатать" alt="Распечатать"></button>
                     @endcan
                 </h2>
             </div>
@@ -62,11 +62,11 @@
                                     <span> ({{$work->price}} руб.)</span>
                                 @can('work-edit')
                                     <span class="work-edit" data-toggle="modal"
-                                          data-target="#editWork">&#128393;</span>
+                                          data-target="#editWork" title="Редактировать работу">&#128393;</span>
                                 @endcan
                                 @can('work-delete')
                                     <span class="work-delete" type="button" data-toggle="modal"
-                                            data-target="#deleteWork">&times;
+                                            data-target="#deleteWork" title="Удалить работу">&times;
                                     </span>
                                 @endcan
                             </div>
@@ -78,7 +78,7 @@
                         {{Form::submit('&#10003;',array('class'=>'btn btn-primary'))}}
                         @can('post-delete')
                             <button class="btn btn-danger post-delete" type="button" data-toggle="modal"
-                                    data-target="#deletePost">&times;
+                                    data-target="#deletePost" title="Удалить должность">&times;
                             </button>
                         @endcan
                     </div>

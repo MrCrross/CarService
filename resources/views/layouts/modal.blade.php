@@ -6,7 +6,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle">Добавить клиента</h5>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close" title="Закрыть окно"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
@@ -49,7 +49,7 @@
                                             <option value="{{$model->id}}">{{$model->firm->name.' '.$model->name.' '.$model->year_release}}</option>
                                         @endforeach
                                     </select>
-                                    <span class="visModel"><img class="icon" src="{{asset('image/plus.svg')}}" alt="Добавить новую модель" ></span>
+                                    <span class="visModel" title="Добавить новую модель"><img class="icon" src="{{asset('image/plus.svg')}}" title="Добавить новую модель" alt="Добавить новую модель" ></span>
                                 </div>
                                 <div id="newModel" class="input-group visually-hidden">
                                     <div class="input-group">
@@ -59,15 +59,15 @@
                                                 <option value="{{$firm->id}}">{{$firm->name}}</option>
                                             @endforeach
                                         </select>
-                                        <span class="visFirm"><img class="icon" src="{{asset('image/plus.svg')}}" alt="Добавить новую фирму" ></span>
+                                        <span class="visFirm" title="Добавить новую фирму"><img class="icon" src="{{asset('image/plus.svg')}}" title="Добавить новую фирму" alt="Добавить новую фирму" ></span>
                                     </div>
                                     <div id="newFirm" class="input-group visually-hidden">
                                         <input class="form-control" type="text" name='firm_name' placeholder="Введите название фирмы автомобиля" pattern="[А-Яа-яЁёЕеA-Za-z\.\s]*">
-                                        <span class="visFirm"><img class="icon" src="{{asset('image/back.svg')}}" alt="Выбрать фирму" ></span>
+                                        <span class="visFirm" title="Выбрать фирму"><img class="icon" src="{{asset('image/back.svg')}}" title="Выбрать фирму" alt="Выбрать фирму" ></span>
                                     </div>
                                     <input class="form-control" type="text" name='model_name' placeholder="Введите название модели автомобиля" pattern="^[А-Яа-яЁёЕе\x1F-\xBF]*">
                                     <input class="form-control" type="text" name='model_year' placeholder="Введите год выпуска автомобиля" pattern="[0-9]{4}">
-                                    <span class="visModel"><img class="icon" src="{{asset('image/back.svg')}}" alt="Выбрать модель" ></span>
+                                    <span class="visModel" title="Выбрать модель"><img class="icon" src="{{asset('image/back.svg')}}" title="Выбрать модель" alt="Выбрать модель" ></span>
                                 </div>
                                 <input class="form-control" name="state" type="text"  value="" pattern="[АВЕКМНОРСТУХ]{1}[0-9]{3}[АВЕКМНОРСТУХ]{2}[0-9]{2}" placeholder="Госномер" required>
                             </td>
@@ -91,7 +91,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle">Добавить новый автомобиль клиенту</h5>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close" title="Закрыть окно"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
@@ -122,7 +122,7 @@
                                                 <option value="{{$model->id}}">{{$model->firm->name.' '.$model->name.' '.$model->year_release}}</option>
                                             @endforeach
                                         </select>
-                                        <span class="visModel"><img class="icon" src="{{asset('image/plus.svg')}}" alt="Добавить новую модель" ></span>
+                                        <span class="visModel" title="Добавить новую модель"><img class="icon" src="{{asset('image/plus.svg')}}" title="Добавить новую модель" alt="Добавить новую модель" ></span>
                                     </div>
                                     <div id="newModel" class="input-group visually-hidden">
                                         <div class="input-group">
@@ -132,15 +132,15 @@
                                                     <option value="{{$firm->id}}">{{$firm->name}}</option>
                                                 @endforeach
                                             </select>
-                                            <span class="visFirm"><img class="icon" src="{{asset('image/plus.svg')}}" alt="Добавить новую фирму" ></span>
+                                            <span class="visFirm" title="Добавить новую фирму"><img class="icon" src="{{asset('image/plus.svg')}}" title="Добавить новую фирму" alt="Добавить новую фирму" ></span>
                                         </div>
                                         <div id="newFirm" class="input-group visually-hidden">
                                             <input class="form-control" type="text" name='firm_name' placeholder="Введите название фирмы автомобиля" pattern="[А-Яа-яЁёЕеA-Za-z\.\s]*">
-                                            <span class="visFirm"><img class="icon" src="{{asset('image/back.svg')}}" alt="Выбрать фирму" ></span>
+                                            <span class="visFirm" title="Выбрать фирму"><img class="icon" src="{{asset('image/back.svg')}}" title="Выбрать фирму" alt="Выбрать фирму" ></span>
                                         </div>
                                         <input class="form-control" type="text" name='model_name' placeholder="Введите название модели автомобиля" pattern="^[А-Яа-яЁёЕе\x1F-\xBF]*">
                                         <input class="form-control" type="text" name='model_year' placeholder="Введите год выпуска автомобиля" pattern="[0-9]{4}">
-                                        <span class="visModel"><img class="icon" src="{{asset('image/back.svg')}}" alt="Выбрать модель" ></span>
+                                        <span class="visModel" title="Выбрать модель"><img class="icon" src="{{asset('image/back.svg')}}" title="Выбрать модель" alt="Выбрать модель" ></span>
                                     </div>
                                     <input class="form-control" name="state" type="text"  value="" pattern="[АВЕКМНОРСТУХ]{1}[0-9]{3}[АВЕКМНОРСТУХ]{2}[0-9]{2}" placeholder="Госномер" required>
                                 </td>
@@ -167,7 +167,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLongTitle">Добавить модель автомобиля</h5>
-                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close" title="Закрыть окно"></button>
                     </div>
                     <div class="modal-body">
                         {{ Form::open(array('action' => 'App\Http\Controllers\CarController@createModel','method'=>'post')) }}
@@ -188,7 +188,7 @@
                                                 <option value="{{$firm->id}}">{{$firm->name}}</option>
                                             @endforeach
                                         </select>
-                                        <img class="icon" src="{{asset('image/plus.svg')}}" alt="Добавить фирму" data-toggle="modal" data-target="#addFirm">
+                                        <img class="icon" src="{{asset('image/plus.svg')}}" title="Добавить фирму" alt="Добавить фирму" data-toggle="modal" data-target="#addFirm">
                                     </div>
                                 </td>
                                 <td><input class="form-control" type="text" name='name' placeholder="Введите название модели автомобиля" pattern="^[А-Яа-яЁёЕе\x1F-\xBF]*"></td>
@@ -215,7 +215,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle">Добавить фирму автомобиля</h5>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close" title="Закрыть окно"></button>
                 </div>
                 <div class="modal-body">
                     {{ Form::open(array('action' => 'App\Http\Controllers\CarController@createFirm','method'=>'post')) }}
@@ -249,7 +249,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle">Удаление автомобиль</h5>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close" title="Закрыть окно"></button>
                 </div>
                 <div class="modal-body">
                     {{ Form::open(array('action' => 'App\Http\Controllers\CarController@destroy','method'=>'delete','id'=>'car-delete')) }}
@@ -271,7 +271,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle">Удаление клиента</h5>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close" title="Закрыть окно"></button>
                 </div>
                 <div class="modal-body">
                     {{ Form::open(array('action' => 'App\Http\Controllers\CustomerController@destroy','method'=>'delete','id'=>'customer-delete')) }}
@@ -303,7 +303,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLongTitle">Назначить работу должности</h5>
-                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close" title="Закрыть окно"></button>
                     </div>
                     <div class="modal-body">
                         {{ Form::open(array('action' => 'App\Http\Controllers\WorkController@createWorkPost','method'=>'post')) }}
@@ -354,7 +354,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle">Удаление сотрудника</h5>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close" title="Закрыть окно"></button>
                 </div>
                 <div class="modal-body">
                     {{ Form::open(array('action' => 'App\Http\Controllers\WorkerController@destroy','method'=>'delete','id'=>'worker-delete')) }}
@@ -377,7 +377,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle">Удаление материала</h5>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close" title="Закрыть окно"></button>
                 </div>
                 <div class="modal-body">
                     {{ Form::open(array('action' => 'App\Http\Controllers\MaterialController@destroy','method'=>'delete','id'=>'material-delete')) }}
@@ -400,7 +400,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle">Удаление должности</h5>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close" title="Закрыть окно"></button>
                 </div>
                 <div class="modal-body">
                     {{ Form::open(array('action' => 'App\Http\Controllers\PostController@destroy','method'=>'delete','id'=>'post-delete')) }}
@@ -423,7 +423,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle">Удаление работу</h5>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close" title="Закрыть окно"></button>
                 </div>
                 <div class="modal-body">
                     {{ Form::open(array('action' => 'App\Http\Controllers\WorkController@destroy','method'=>'delete','id'=>'work-delete')) }}
@@ -446,7 +446,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle">Редактировать название фирмы</h5>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close" title="Закрыть окно"></button>
                 </div>
                 {{ Form::open(array('action' => 'App\Http\Controllers\CarController@updateFirm','method'=>'patch','id'=>'form-firm-edit')) }}
                 <div class="modal-body">
@@ -472,7 +472,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle">Редактировать модель</h5>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close" title="Закрыть окно"></button>
                 </div>
                 {{ Form::open(array('action' => 'App\Http\Controllers\CarController@updateModel','method'=>'patch','id'=>'form-model-edit')) }}
                 <div class="modal-body">
@@ -506,7 +506,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle">Добавить должность</h5>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close" title="Закрыть окно"></button>
                 </div>
                 <div class="modal-body">
                     {{ Form::open(array('action' => 'App\Http\Controllers\PostController@create','method'=>'post')) }}
@@ -547,7 +547,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle">Добавить работу</h5>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close" title="Закрыть окно"></button>
                 </div>
                 <div class="modal-body">
                     {{ Form::open(array('action' => 'App\Http\Controllers\WorkController@create','method'=>'post')) }}
@@ -588,7 +588,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle">Изменить работу</h5>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close" title="Закрыть окно"></button>
                 </div>
                 <div class="modal-body">
                     {{ Form::open(array('action' => 'App\Http\Controllers\WorkController@updateWorkPost','method'=>'patch','id'=>'work-edit')) }}
@@ -633,7 +633,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle">Добавить материал</h5>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close" title="Закрыть окно"></button>
                 </div>
                 <div class="modal-body">
                     {{ Form::open(array('action' => 'App\Http\Controllers\MaterialController@createOrder','method'=>'post')) }}

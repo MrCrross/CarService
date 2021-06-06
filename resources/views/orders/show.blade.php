@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @can('order-print')<a onclick="print()" class="btn"><img class="icon-sm" src="{{asset('image/print.svg')}}" alt="Распечатать"></a>@endcan
+    @can('order-print')<a onclick="print()" class="btn" title="Распечатать"><img class="icon-sm" src="{{asset('image/print.svg')}}" title="Распечатать" alt="Распечатать"></a>@endcan
     <div id="print">
         <table class="table table-bordered caption-top">
             <caption class="text-center">(КОПИЯ) Заказ-наряд №

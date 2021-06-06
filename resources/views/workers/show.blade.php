@@ -6,7 +6,7 @@
             <div class="float-start">
                 <h2>Сотрудник {{ $worker[0]->last_name." ".$worker[0]->first_name." ".$worker[0]->father_name}}
                     @can('worker-print')
-                        <button class="btn" onclick="print()"><img class="icon-sm" src="{{asset('image/print.svg')}}" alt="Распечатать"></button>
+                        <button class="btn" onclick="print()" title="Распечатать"><img class="icon-sm" src="{{asset('image/print.svg')}}" title="Распечатать" alt="Распечатать"></button>
                     @endcan
                 </h2>
             </div>
@@ -54,8 +54,8 @@
                                     {{$contract->post->name}}:
                                     {{$contract->post_change}}
                                     @can('contract-edit')
-                                        <span class="download" data-contract="{{$contract->contract}}">
-                                        <img class="icon-sm" src="{{asset('image/download.svg')}}" alt="Скачать документ о переводе">
+                                        <span class="download" data-contract="{{$contract->contract}}" title="Скачать документ о переводе">
+                                        <img class="icon-sm" src="{{asset('image/download.svg')}}" title="Скачать документ о переводе" alt="Скачать документ о переводе">
                                     </span>
                                     @endcan
                                 </div>

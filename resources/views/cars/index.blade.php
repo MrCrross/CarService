@@ -17,7 +17,7 @@
         <div class="float-start">
             <h2>Автомобили
                 @can('customer-print')
-                    <button class="btn" onclick="print()"><img class="icon-sm" src="{{asset('image/print.svg')}}" alt="Распечатать"></button>
+                    <button class="btn" onclick="print()" title="Распечатать"><img class="icon-sm" src="{{asset('image/print.svg')}}" title="Распечатать" alt="Распечатать"></button>
                 @endcan
             </h2>
         </div>
@@ -54,8 +54,8 @@
                     @endforeach
                 </select>
                 @can('model-edit')
-                    <span class="input-group-text" data-toggle="modal" data-target="#addModel">
-                        <img src="{{asset('image/auto-plus.svg')}}" alt="Добавить модель" class="icon-sm">
+                    <span class="input-group-text" data-toggle="modal" data-target="#addModel" title="Добавить модель">
+                        <img src="{{asset('image/auto-plus.svg')}}" title="Добавить модель" alt="Добавить модель" class="icon-sm">
                     </span>
                 @endcan
             </div>
@@ -68,7 +68,7 @@
                     @endforeach
                 </select>
                 @can('customer-list')
-                    <a href="{{asset('customers')}}"> <img class="icon" src="{{asset('image/user-plus.svg')}}" alt="Добавить пользователя"></a>
+                    <a href="{{asset('customers')}}"> <img class="icon" src="{{asset('image/user-plus.svg')}}" title="Добавить пользователя" alt="Добавить пользователя"></a>
                 @endcan
             </div>
         </td>
@@ -105,12 +105,12 @@
                 </div>
                 <span data-id="{{$car->model->firm->id}}">{{$car->model->firm->name}}</span>
                 @can('firm-edit')
-                    <span class="firm-edit" data-toggle="modal" data-target="#editFirm">&#128393;</span>
+                    <span class="firm-edit" data-toggle="modal" data-target="#editFirm" title="Редактировать фирму">&#128393;</span>
                 @endcan
                 <div class="input-group">
                     <span data-id="{{$car->model->id}}" data-year="{{$car->model->year_release}}" >{{$car->model->name}}</span>
                     @can('model-edit')
-                        <span class="model-edit" data-toggle="modal" data-target="#editModel">&#128393;</span>
+                        <span class="model-edit" data-toggle="modal" data-target="#editModel" title="Редактировать модель">&#128393;</span>
                     @endcan
                 </div>
             </div>
@@ -118,7 +118,7 @@
         <td>
             <span>{{$car->customer->last_name." ".$car->customer->first_name." ".$car->customer->father_name}}</span>
             @can('customer-edit')
-            <span class="car-edit">&#128393;</span>
+            <span class="car-edit" title="Редактировать заказчика">&#128393;</span>
             <div class="input-group visually-hidden">
                 <select class="form-select" name="customer">
                     @foreach ($customers as $customer)
@@ -130,14 +130,14 @@
                     @endforeach
                 </select>
                 @can('customer-edit')
-                <a href="{{asset('customers')}}"> <img class="icon" src="{{asset('image/user-plus.svg')}}" alt="Добавить пользователя"></a>
+                <a href="{{asset('customers')}}"> <img class="icon" src="{{asset('image/user-plus.svg')}}" title="Добавить пользователя" alt="Добавить пользователя"></a>
                 @endcan
             </div>
             @endcan
         </td>
         <td><span>{{ $car->state_number }}</span>
             @can('customer-edit')
-            <span class="car-edit">&#128393;</span>
+            <span class="car-edit" title="Редактировать госномер">&#128393;</span>
             <div class="input-group visually-hidden">
                 <input class="form-control" name="state" type="text"  value="{{ $car->state_number }}" pattern="[АВЕКМНОРСТУХ]{1}[0-9]{3}[АВЕКМНОРСТУХ]{2}[0-9]{2}">
                 {{Form::submit('&#10003;',array('class'=>'input-group-text btn btn-primary'))}}
@@ -149,7 +149,7 @@
                     {{Form::submit('&#10003;',array('class'=>'input-group-text btn btn-primary'))}}
                 @endcan
                 @can('customer-delete')
-                    <button class="form-control btn btn-danger car-delete" type="button" data-toggle="modal" data-target="#deleteCar">&times;</button>
+                    <button class="form-control btn btn-danger car-delete" type="button" data-toggle="modal" data-target="#deleteCar" title="Удалить автомобиль">&times;</button>
                 @endcan
             </div>
         </td>

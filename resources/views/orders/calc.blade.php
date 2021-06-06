@@ -4,13 +4,13 @@
     <div class="col-lg-12 ">
         <div class="float-start">
             <h2>Заказ-наряды
-                @can('order-print')<a onclick="print()" class="btn"><img class="icon-sm" src="{{asset('image/print.svg')}}" alt="Распечатать"></a>@endcan
+                @can('order-print')<a onclick="print()" class="btn" title="Распечатать"><img class="icon-sm" src="{{asset('image/print.svg')}}" title="Распечатать" alt="Распечатать"></a>@endcan
             </h2>
         </div>
         <div class="float-end">
             <div class="input-group">
                 <input class="form-control" type="search" placeholder="Поиск">
-                <button id="btnSearch" class="input-group-text"><img src="{{asset('image/search.svg')}}" alt="Найти" class="icon-sm"></button>
+                <button id="btnSearch" class="input-group-text" title="Найти" ><img src="{{asset('image/search.svg')}}" title="Найти" alt="Найти" class="icon-sm"></button>
             </div>
         </div>
     </div>
@@ -28,7 +28,7 @@
             <input class="form-control form-control-sm" type="date" id="endDate" min="{{$min}}" max="{{$max}}" required>
             <label for="completed">Конечная дата</label>
         </div>
-        <input class="btn btn-sm btn-outline-primary" type="submit" value="Найти">
+        <input class="btn btn-sm btn-outline-primary" type="submit" value="Найти" title="Найти">
     {{Form::close()}}
 </div>
 <div class="total-content visually-hidden row">

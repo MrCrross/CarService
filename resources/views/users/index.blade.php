@@ -40,8 +40,8 @@
     </td>
     <td>
        <a class="btn btn-info" href="{{ route('users.show',$user->id) }}">Посмотреть</a>
-       <a class="btn btn-primary" href="{{ route('users.edit',$user->id) }}">&#128393;</a>
-        {!! Form::open(['method' => 'DELETE','route' => ['users.destroy', $user->id],'style'=>'display:inline']) !!}
+       <a class="btn btn-primary" href="{{ route('users.edit',$user->id) }}" title="Редактировать пользователя">&#128393;</a>
+        {!! Form::open(['method' => 'DELETE','route' => ['users.destroy', $user->id],'style'=>'display:inline','title'=>'Удалить пользователя']) !!}
             {!! Form::submit('&times;', ['class' => 'btn btn-danger']) !!}
         {!! Form::close() !!}
     </td>

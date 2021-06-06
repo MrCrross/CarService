@@ -36,10 +36,10 @@
         <td>
             <a class="btn btn-info" href="{{ route('roles.show',$role->id) }}">Посмотреть</a>
             @can('role-edit')
-                <a class="btn btn-primary" href="{{ route('roles.edit',$role->id) }}">&#128393;</a>
+                <a class="btn btn-primary" href="{{ route('roles.edit',$role->id) }}" title="Редактировать роль">&#128393;</a>
             @endcan
             @can('role-delete')
-                {!! Form::open(['method' => 'DELETE','route' => ['roles.destroy', $role->id],'style'=>'display:inline']) !!}
+                {!! Form::open(['method' => 'DELETE','route' => ['roles.destroy', $role->id],'style'=>'display:inline','title'=>'Удалить роль']) !!}
                     {!! Form::submit('&times;', ['class' => 'btn btn-danger']) !!}
                 {!! Form::close() !!}
             @endcan

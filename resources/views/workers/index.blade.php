@@ -18,14 +18,14 @@
             <div class="float-start">
                 <h2>Сотрудники
                     @can('worker-print')
-                        <button class="btn" onclick="print()"><img class="icon-sm" src="{{asset('image/print.svg')}}" alt="Распечатать"></button>
+                        <button class="btn" onclick="print()" title="Распечатать"><img class="icon-sm" src="{{asset('image/print.svg')}}" title="Распечатать" alt="Распечатать"></button>
                     @endcan
                 </h2>
             </div>
             <div class="float-end">
                 <div class="input-group">
                     <input class="form-control" type="search" placeholder="Поиск">
-                    <button id="btnSearch" class="input-group-text"><img src="{{asset('image/search.svg')}}" alt="Найти" class="icon-sm"></button>
+                    <button id="btnSearch" class="input-group-text" title="Найти"><img src="{{asset('image/search.svg')}}" title="Найти" alt="Найти" class="icon-sm"></button>
                     @can('post-create')
                         <button class="btn btn-success ms-2" data-toggle="modal" data-target="#addPost">Добавить должность
                         </button>
@@ -71,7 +71,7 @@
             <td>
                 <span class="lastName"></span>
                 @can('worker-edit')
-                    <span class="worker-edit">&#128393;</span>
+                    <span class="worker-edit" title="Редактировать фамилию">&#128393;</span>
                     <div class="input-group visually-hidden">
                         <input class="form-control" name="last_name" type="text" value=""
                                pattern="^[A-Za-zА-Яа-яЁё]+$">
@@ -82,7 +82,7 @@
             <td>
                 <span class="firstName"></span>
                 @can('worker-edit')
-                    <span class="worker-edit">&#128393;</span>
+                    <span class="worker-edit" title="Редактировать имя">&#128393;</span>
                     <div class="input-group visually-hidden">
                         <input class="form-control" name="first_name" type="text" value=""
                                pattern="^[A-Za-zА-Яа-яЁё]+$">
@@ -93,7 +93,7 @@
             <td>
                 <span class="fatherName"></span>
                 @can('worker-edit')
-                    <span class="worker-edit">&#128393;</span>
+                    <span class="worker-edit" title="Редактировать отчество">&#128393;</span>
                     <div class="input-group visually-hidden">
                         <input class="form-control " name="father_name" type="text"
                                value="" pattern="^[A-Za-zА-Яа-яЁё]+$">
@@ -103,7 +103,7 @@
             <td>
                 <span class="phone"></span>
                 @can('worker-edit')
-                    <span class="worker-edit">&#128393;</span>
+                    <span class="worker-edit" title="Редактировать номер телефона">&#128393;</span>
                     <div class="input-group visually-hidden">
                         <input class="form-control" name="phone" type="text" value=""
                                pattern="[0-9]{11}" maxlength="11" minlength="11">
@@ -114,7 +114,7 @@
                 <td>
                     <span class="post"></span>
                     @can('post-edit')
-                        <span class="worker-edit">&#128393;</span>
+                        <span class="worker-edit" title="Редактировать должность" >&#128393;</span>
                         <div class="input-group visually-hidden">
                             <select class="form-select" name="post">
                             </select>
@@ -130,11 +130,11 @@
                                data-id="" data-price=""></label>
                         @can('work-edit')
                             <span class="work-edit" data-toggle="modal"
-                                  data-target="#editWork">&#128393;</span>
+                                  data-target="#editWork" title="Редактировать работу">&#128393;</span>
                         @endcan
                         @can('work-delete')
                             <span class="work-delete" type="button" data-toggle="modal"
-                                  data-target="#deleteWork">&times;
+                                  data-target="#deleteWork" title="Удалить работу">&times;
                                 </span>
                         @endcan
                     </div>
@@ -145,8 +145,8 @@
                     <div class="contracts btn-group">
                         <span class="contract"></span>
                         @can('contract-edit')
-                            <span class="download" data-contract="">
-                                <img class="icon-sm" src="{{asset('image/download.svg')}}" alt="Скачать документ о переводе">
+                            <span class="download" data-contract="" title="Скачать документ о переводе">
+                                <img class="icon-sm" src="{{asset('image/download.svg')}}" title="Скачать документ о переводе" alt="Скачать документ о переводе">
                             </span>
                         @endcan
                     </div>
@@ -163,7 +163,7 @@
                     {{Form::submit('&#10003;',array('class'=>'btn btn-primary'))}}
                     @can('worker-delete')
                         <button class="btn btn-danger worker-delete" type="button" data-toggle="modal"
-                                data-target="#deleteWorker">&times;
+                                data-target="#deleteWorker" title="Удалить работника">&times;
                         </button>
                     @endcan
                 </div>
@@ -198,8 +198,8 @@
                             @endforeach
                         </select>
                         @can('post-edit')
-                            <a class="input-group-prepend work-edit" href="{{route('workers.works')}}">
-                                <img class="icon" src="{{asset('image/edit.svg')}}" alt="Переназначить работу должности">
+                            <a class="input-group-prepend work-edit" href="{{route('workers.works')}}" title="Переназначить работу должности">
+                                <img class="icon" src="{{asset('image/edit.svg')}}" title="Переназначить работу должности" alt="Переназначить работу должности">
                             </a>
                         @endcan
                     </div>
@@ -221,7 +221,7 @@
                 <td>
                     {{ $worker->last_name }}
                     @can('worker-edit')
-                        <span class="worker-edit">&#128393;</span>
+                        <span class="worker-edit" title="Редактировать фамилию">&#128393;</span>
                         <div class="input-group visually-hidden">
                             <input class="form-control" name="last_name" type="text" value="{{ $worker->last_name }}"
                                    pattern="^[A-Za-zА-Яа-яЁё]+$">
@@ -232,7 +232,7 @@
                 <td>
                     {{ $worker->first_name }}
                     @can('worker-edit')
-                        <span class="worker-edit">&#128393;</span>
+                        <span class="worker-edit" title="Редактировать имя">&#128393;</span>
                         <div class="input-group visually-hidden">
                             <input class="form-control" name="first_name" type="text" value="{{ $worker->first_name }}"
                                    pattern="^[A-Za-zА-Яа-яЁё]+$">
@@ -242,7 +242,7 @@
                 </td>
                 <td>{{ $worker->father_name }}
                     @can('worker-edit')
-                        <span class="worker-edit">&#128393;</span>
+                        <span class="worker-edit" title="Редактировать отчество">&#128393;</span>
                         <div class="input-group visually-hidden">
                             <input class="form-control " name="father_name" type="text"
                                    value="{{ $worker->father_name }}" pattern="^[A-Za-zА-Яа-яЁё]+$">
@@ -251,7 +251,7 @@
                     @endcan</td>
                 <td>{{ $worker->phone }}
                     @can('worker-edit')
-                        <span class="worker-edit">&#128393;</span>
+                        <span class="worker-edit" title="Редактировать номер телефона">&#128393;</span>
                         <div class="input-group visually-hidden">
                             <input class="form-control" name="phone" type="text" value="{{ $worker->phone }}"
                                    pattern="[0-9]{11}" maxlength="11" minlength="11">
@@ -262,7 +262,7 @@
                     <td>
                         {{$worker->post->name}}
                         @can('post-edit')
-                            <span class="worker-edit">&#128393;</span>
+                            <span class="worker-edit" title="Переназначить должность">&#128393;</span>
                             <div class="input-group visually-hidden">
                                 <select class="form-select" name="post">
                                     <option value="" selected>Выберите должность</option>
@@ -283,11 +283,11 @@
                                       data-id="{{$work->work->id}}" data-price="{{$work->work->price}}">{{$work->work->name}}</label>
                                 @can('work-edit')
                                     <span class="work-edit" data-toggle="modal"
-                                          data-target="#editWork">&#128393;</span>
+                                          data-target="#editWork" title="Редактировать работу">&#128393;</span>
                                 @endcan
                                 @can('work-delete')
                                     <span class="work-delete" type="button" data-toggle="modal"
-                                          data-target="#deleteWork">&times;
+                                          data-target="#deleteWork" title="Удалить работу">&times;
                                     </span>
                                 @endcan
                             </div>
@@ -301,8 +301,8 @@
                                 {{$contract->post->name}}:
                                 {{$contract->post_change}}
                                 @can('contract-edit')
-                                    <span class="download" data-contract="{{$contract->contract}}">
-                                        <img class="icon-sm" src="{{asset('image/download.svg')}}" alt="Скачать документ о переводе">
+                                    <span class="download" data-contract="{{$contract->contract}}" title="Скачать документ о переводе">
+                                        <img class="icon-sm" src="{{asset('image/download.svg')}}" title="Скачать документ о переводе" alt="Скачать документ о переводе">
                                     </span>
                                 @endcan
                             </div>
@@ -326,7 +326,7 @@
                         {{Form::submit('&#10003;',array('class'=>'btn btn-primary'))}}
                         @can('worker-delete')
                             <button class="btn btn-danger worker-delete" type="button" data-toggle="modal"
-                                    data-target="#deleteWorker">&times;
+                                    data-target="#deleteWorker" title="Удалить работника">&times;
                             </button>
                         @endcan
                     </div>

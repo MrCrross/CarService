@@ -17,14 +17,14 @@
         <div class="float-start">
             <h2>Клиенты
                 @can('customer-print')
-                    <button class="btn" onclick="print()"><img class="icon-sm" src="{{asset('image/print.svg')}}" alt="Распечатать"></button>
+                    <button class="btn" onclick="print()" title="Распечатать"><img class="icon-sm" src="{{asset('image/print.svg')}}" title="Распечатать" alt="Распечатать"></button>
                 @endcan
             </h2>
         </div>
         <div class="float-end">
             <div class="input-group">
                 <input class="form-control" type="search" placeholder="Поиск">
-                <button id="btnSearch" class="input-group-text"><img src="{{asset('image/search.svg')}}" alt="Найти" class="icon-sm"></button>
+                <button id="btnSearch" class="input-group-text" title="Найти"><img src="{{asset('image/search.svg')}}" title="Найти" alt="Найти" class="icon-sm"></button>
                 <a href="{{asset('cars')}}" class="btn btn-success ms-2">Добавить автомобиль</a>
             </div>
         </div>
@@ -48,7 +48,7 @@
         <td>
             <span class="lastName"></span>
             @can('customer-edit')
-                <span class="customer-edit">&#128393;</span>
+                <span class="customer-edit" title="Редактировать фамилию">&#128393;</span>
                 <div class="input-group visually-hidden">
                     <input class="form-control" name="last_name" type="text" value="" pattern="^[A-Za-zА-Яа-яЁё]+$">
                     {{Form::submit('&#10003;',array('class'=>'input-group-text btn btn-primary'))}}
@@ -58,7 +58,7 @@
         <td>
             <span class="firstName"></span>
             @can('customer-edit')
-                <span class="customer-edit">&#128393;</span>
+                <span class="customer-edit" title="Редактировать имя">&#128393;</span>
                 <div class="input-group visually-hidden">
                     <input class="form-control" name="first_name" type="text" value="" pattern="^[A-Za-zА-Яа-яЁё]+$">
                     {{Form::submit('&#10003;',array('class'=>'input-group-text btn btn-primary'))}}
@@ -67,7 +67,7 @@
         <td>
             <span class="fatherName"></span>
             @can('customer-edit')
-                <span class="customer-edit">&#128393;</span>
+                <span class="customer-edit" title="Редактировать отчество">&#128393;</span>
                 <div class="input-group visually-hidden">
                     <input class="form-control " name="father_name" type="text" value="" pattern="^[A-Za-zА-Яа-яЁё]+$">
                     {{Form::submit('&#10003;',array('class'=>'input-group-text btn btn-primary'))}}
@@ -76,7 +76,7 @@
         <td>
             <span class="phone"></span>
             @can('customer-edit')
-                <span class="customer-edit">&#128393;</span>
+                <span class="customer-edit" title="Редактировать номер телефона">&#128393;</span>
                 <div class="input-group visually-hidden">
                     <input class="form-control" name="phone" type="text" value="" pattern="[0-9]{11}" maxlength="11" minlength="11">
                     {{Form::submit('&#10003;',array('class'=>'input-group-text btn btn-primary'))}}
@@ -87,7 +87,7 @@
                 <input class="visually-hidden" type="text" name="car[]" value="" readonly>
                 <span class="car form-control form-control-sm"></span>
                 @can('customer-edit')
-                    <span class="input-group-text customer-edit">&#128393;</span>
+                    <span class="input-group-text customer-edit" title="Редактировать автомобиль">&#128393;</span>
                     <div class="input-group visually-hidden">
                         <select class="form-select" name="model[]">
                         </select>
@@ -101,7 +101,7 @@
             <div class="btn-group">
                 {{Form::submit('&#10003;',array('class'=>'btn btn-primary'))}}
                 @can('customer-delete')
-                    <button class="btn btn-danger customer-delete" type="button" data-toggle="modal" data-target="#deleteCustomer">&times;</button>
+                    <button class="btn btn-danger customer-delete" type="button" data-toggle="modal" data-target="#deleteCustomer" title="Удалить заказчика">&times;</button>
                 @endcan
             </div>
         </td>
@@ -146,7 +146,7 @@
         </th>
         <td>{{ $customer->last_name }}
             @can('customer-edit')
-                <span class="customer-edit">&#128393;</span>
+                <span class="customer-edit" title="Редактировать фамилию">&#128393;</span>
                 <div class="input-group visually-hidden">
                     <input class="form-control" name="last_name" type="text"  value="{{ $customer->last_name }}" pattern="^[A-Za-zА-Яа-яЁё]+$">
                     {{Form::submit('&#10003;',array('class'=>'input-group-text btn btn-primary'))}}
@@ -155,7 +155,7 @@
         <td>
             {{ $customer->first_name }}
             @can('customer-edit')
-                <span class="customer-edit">&#128393;</span>
+                <span class="customer-edit" title="Редактировать имя">&#128393;</span>
                 <div class="input-group visually-hidden">
                     <input class="form-control" name="first_name" type="text"  value="{{ $customer->first_name }}" pattern="^[A-Za-zА-Яа-яЁё]+$">
                     {{Form::submit('&#10003;',array('class'=>'input-group-text btn btn-primary'))}}
@@ -163,7 +163,7 @@
             @endcan</td>
         <td>{{ $customer->father_name }}
             @can('customer-edit')
-            <span class="customer-edit">&#128393;</span>
+            <span class="customer-edit" title="Редактировать отчество">&#128393;</span>
             <div class="input-group visually-hidden">
                 <input class="form-control " name="father_name" type="text"  value="{{ $customer->father_name }}" pattern="^[A-Za-zА-Яа-яЁё]+$">
                 {{Form::submit('&#10003;',array('class'=>'input-group-text btn btn-primary'))}}
@@ -171,7 +171,7 @@
             @endcan</td>
         <td>{{ $customer->phone }}
             @can('customer-edit')
-            <span class="customer-edit">&#128393;</span>
+            <span class="customer-edit" title="Редактировать номер телефона">&#128393;</span>
             <div class="input-group visually-hidden">
                 <input class="form-control" name="phone" type="text"  value="{{ $customer->phone }}" pattern="[0-9]{11}" maxlength="11" minlength="11">
                 {{Form::submit('&#10003;',array('class'=>'input-group-text btn btn-primary'))}}
@@ -183,7 +183,7 @@
                     <input class="visually-hidden" type="text" name="car[]" value="{{$car->id}}" readonly>
                     <span class="form-control form-control-sm">{{$car->model->firm->name.' '.$car->model->name.' '.$car->model->year_release.' '.$car->state_number}}</span>
                     @can('customer-edit')
-                        <span class="input-group-text customer-edit">&#128393;</span>
+                        <span class="input-group-text customer-edit" title="Редактировать автомобиль">&#128393;</span>
                         <div class="input-group visually-hidden">
                             <select class="form-select" name="model[]">
                                 @foreach ($models as $model)
@@ -205,7 +205,7 @@
             <div class="btn-group">
                 {{Form::submit('&#10003;',array('class'=>'btn btn-primary'))}}
                 @can('customer-delete')
-                    <button class="btn btn-danger customer-delete" type="button" data-toggle="modal" data-target="#deleteCustomer">&times;</button>
+                    <button class="btn btn-danger customer-delete" type="button" data-toggle="modal" data-target="#deleteCustomer" title="Удалить заказчика">&times;</button>
                 @endcan
             </div>
         </td>

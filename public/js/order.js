@@ -1,39 +1,55 @@
+function searchElement(actual,needed){
+    const elem = actual.parentNode.querySelector(needed)
+    if(elem){
+        return elem
+    }else {
+        return searchElement(actual.parentNode,needed)
+    }
+}
+function searchParentByTag(actual,needed){
+    const elem = actual.parentNode
+    if(elem.tagName === needed.toUpperCase()){
+        return elem
+    }else {
+        return searchParentByTag(actual.parentNode,needed)
+    }
+}
 // Обработчик клонирование объектов
 function duplicateHandler(item) {
-    const td = item.classList.contains('icon') ? item.parentNode.parentNode.parentNode: item.parentNode.parentNode
-    const objDub = td.querySelector('div')
-    const remObj = document.createElement('span')
-    const remImg = document.createElement('img')
-    remImg.classList.add('icon')
-    remImg.classList.add('remove')
-    remImg.classList.add('mt-2')
-    remImg.classList.add('ms-1')
-    remImg.src='/image/minus.svg'
-    remImg.alt='Удалить'
-    remObj.classList.add('remove')
-    remObj.append(remImg)
-    const newObj = objDub.cloneNode(true)
-    if(newObj.querySelector('.w-75')) newObj.querySelector('.w-75').classList.add('visually-hidden')
-    newObj.querySelector('.duplicate').remove()
-    newObj.append(remObj)
-    td.append(newObj)
+    console.log(document.querySelector('input[name="customer"]').value)
+    console.log(document.querySelector('input[name="customer"]').innerHTML)
+    const tbody = searchElement(item,'tbody')
+    const newObj = tbody.querySelector('.clone').cloneNode(true)
+    const work =newObj.querySelector('select[name="work[]"]')
+    const worker =newObj.querySelector('select[name="worker[]"]')
+    const material = newObj.querySelector('select[name="material[]"]')
+    const count = newObj.querySelector('input[name="count"]')
+    newObj.className=''
+    newObj.querySelector('.num').innerHTML=parseInt(tbody.querySelectorAll('tr')[tbody.querySelectorAll('tr').length-1].querySelector('.num').innerHTML)+1
+    if(work){work.required=true}
+    if(worker){worker.required=true}
+    if(material){material.required=true}
+    if(count){count.required=true}
+    tbody.append(newObj)
 }
 
 // Обработчик удаление клона объекта
 function duplicateRemoveHandler(item) {
-    if(item.classList.contains('icon')){
-        item.parentNode.parentNode.remove()
-    }else{
-        item.parentNode.remove()
-    }
+    const tr = searchParentByTag(item,'tr')
+    const tbody = searchParentByTag(item,'tbody')
+    tr.remove()
+    tbody.querySelectorAll('tr').forEach(function (elem,num){
+        elem.querySelector('.num').innerHTML=num
+    })
 }
 
 //Проявление скрытых select'ов
 function visuallyHandler(item) {
-    if (item.parentNode.parentNode.querySelector('div.visually-hidden') && item.value !== '') {
-        item.parentNode.parentNode.querySelector('div.visually-hidden').classList.remove('visually-hidden')
-    }else if (!item.parentNode.parentNode.querySelector('div.visually-hidden') && item.value ==='') {
-        item.parentNode.parentNode.querySelector('div.w-75').classList.add('visually-hidden')
+    const vhElement = searchParentByTag(item,'tr').querySelector('.v-h')
+    if (item.value !== '') {
+        vhElement.classList.remove('visually-hidden')
+    }else{
+        vhElement.classList.add('visually-hidden')
     }
 }
 
@@ -71,7 +87,8 @@ function clientHandler(item){
                         data.cars.forEach(function (item){
                             const option = document.createElement('option')
                             option.value = item.id
-                            option.innerHTML = item.model.firm.name + ' ' + item.model.name +" "+ item.model.year_release +" "+item.state_number
+                            option.dataset.state=item.state_number
+                            option.innerHTML = item.model.firm.name + ' ' + item.model.name +" "+ item.model.year_release
                             cars.append(option)
                         })
                     }
@@ -102,7 +119,7 @@ function workHandler(item){
             .then((res)=>{
                 if(res.length!==0){
                     const data =res[0]
-                    const workers = item.parentNode.parentNode.querySelector('select[name="worker[]"]')
+                    const workers = searchParentByTag(item,'tr').querySelector('select[name="worker[]"]')
                     if(data.posts.length!==0){
                         workers.querySelectorAll('option').forEach(function (item){
                             item.remove()
@@ -129,124 +146,39 @@ function checkMaxHandler(item){
     const id = item.value
     if(id!==''){
         const max = item.options[item.selectedIndex].dataset.count
-        const inputCount = item.parentNode.parentNode.querySelector('input[name="count[]"]')
+        const inputCount = searchParentByTag(item,'tr').querySelector('input[name="count[]"]')
         inputCount.setAttribute('max',max)
     }
 }
 
 //Добавление данных клиента в модальное окно нового автомобиля
 function carCreateHandler(item){
-    let customer =''
-    if(item.classList.contains('icon')){
-        customer = item.parentNode.parentNode.parentNode.querySelector('select[name="customer"]')
-    }else{
-        customer = item.parentNode.parentNode.querySelector('select[name="customer"]')
-    }
+    const customer =searchElement(item,'select[name="customer"]')
     const nameCustomer =customer.options[customer.selectedIndex].text
     const form = document.getElementById('formCreateCar')
     const input = form.querySelector('input[name="nameCustomer"]')
     input.dataset.id = customer.value
     input.value = nameCustomer
-
-}
-
-//Вывод данных о клиенте в соответствующую таблицу для печати
-function tableClientHandler(){
-    const numClient = document.getElementById('numClient')
-    const nameClient = document.getElementById('nameClient')
-    const carClient = document.getElementById('carClient')
-    const stateClient = document.getElementById('stateCarClient')
-    const customer = document.getElementById('customer')
-    const selCustomer = customer.querySelector('select[name="customer"]')
-    const selCar = customer.querySelector('select[name="car"]')
-    if(selCustomer.value!=='' && selCar.value!==''){
-        const textCar = selCar.options[selCar.selectedIndex].text
-        const nameCar = textCar.slice(0,textCar.lastIndexOf(" "))
-        const stateCar = textCar.slice(textCar.lastIndexOf(" "))
-        numClient.innerHTML = '1'
-        nameClient.innerHTML = selCustomer.options[selCustomer.selectedIndex].text
-        carClient.innerHTML = nameCar
-        stateClient.innerHTML = stateCar
-    }else{
-        numClient.innerHTML = ''
-        nameClient.innerHTML =''
-        carClient.innerHTML = ''
-        stateClient.innerHTML = ''
-    }
 }
 
 //Вывод данных о работе и исполнителе в соответствующую таблицу для печати
-function tableWorkHandler(){
-    let textSumma =0
-    const tWork = document.getElementById('t-work').querySelector('tbody')
-    const totalWork = document.getElementById('total-work')
-    const work = document.getElementById('work')
-    const arrSelects = work.querySelectorAll('.works')
-    tWork.querySelectorAll('tr').forEach(function (item){
-        item.remove()
-    })
-    totalWork.innerHTML =' '
-    arrSelects.forEach(function (item,key){
-        const selWork = item.querySelector('select[name="work[]"]')
-        const selWorker = item.querySelector('select[name="worker[]"]')
-        if(selWork.value!=='' && selWorker.value!==''){
-            const tr_work = document.createElement('tr')
-            const numWork = document.createElement('td')
-            const nameWork = document.createElement('td')
-            const nameWorker = document.createElement('td')
-            const priceWork = document.createElement('td')
-            numWork.innerHTML = ++key
-            nameWork.innerHTML = selWork.options[selWork.selectedIndex].text
-            nameWorker.innerHTML = selWorker.options[selWorker.selectedIndex].text
-            priceWork.innerHTML = selWork.options[selWork.selectedIndex].dataset.price
-            textSumma += Number(priceWork.innerHTML)
-            tr_work.append(numWork)
-            tr_work.append(nameWork)
-            tr_work.append(nameWorker)
-            tr_work.append(priceWork)
-            tWork.append(tr_work)
-        }
-    })
-    totalWork.innerHTML = textSumma
-}
-
-//Вывод данных о работе и исполнителе в соответствующую таблицу для печати
-function tableMaterialHandler(){
-    let textSumma =0
-    const tMat = document.getElementById('t-material').querySelector('tbody')
+function calcAmount(){
+    let totalAmountWork = 0
+    let totalAmountMat = 0
     const totalMat = document.getElementById('total-material')
     const totalWork = document.getElementById('total-work')
     const total = document.getElementById('total')
-    const material = document.getElementById('material')
-    const arrSelects = material.querySelectorAll('.materials')
-    tMat.querySelectorAll('tr').forEach(function (item){
-        item.remove()
+    const priceWorks= document.querySelectorAll('.priceWork')
+    const amountMats = document.querySelectorAll('.amountMat')
+    priceWorks.forEach(function (item){
+        totalAmountWork+= parseInt(item.innerHTML)?parseInt(item.innerHTML):0
     })
-    totalMat.innerHTML =''
-    total.innerHTML =''
-    arrSelects.forEach(function (item,key){
-        const selMat = item.querySelector('select[name="material[]"]')
-        const inputMat = item.querySelector('input[name="count[]"]')
-        if(selMat.value!=='' && inputMat.value!==''){
-            const tr_mat = document.createElement('tr')
-            const numMat = document.createElement('td')
-            const nameMat = document.createElement('td')
-            const countMat = document.createElement('td')
-            const priceMat = document.createElement('td')
-            numMat.innerHTML = ++key
-            nameMat.innerHTML = selMat.options[selMat.selectedIndex].text
-            countMat.innerHTML = inputMat.value
-            priceMat.innerHTML = selMat.options[selMat.selectedIndex].dataset.price
-            textSumma += Number(priceMat.innerHTML)*Number(countMat.innerHTML)
-            tr_mat.append(numMat)
-            tr_mat.append(nameMat)
-            tr_mat.append(countMat)
-            tr_mat.append(priceMat)
-            tMat.append(tr_mat)
-        }
+    amountMats.forEach(function (item){
+        totalAmountMat+= parseInt(item.innerHTML)?parseInt(item.innerHTML):0
     })
-    totalMat.innerHTML = textSumma
-    total.innerHTML =textSumma+Number(totalWork.innerHTML)
+    totalMat.innerHTML=totalAmountMat
+    totalWork.innerHTML = totalAmountWork
+    total.innerHTML = totalAmountWork + totalAmountMat
 }
 
 // Сегодняшняя дата для печати
@@ -263,8 +195,19 @@ function submitHandler(e){
     form.append(input)
     form.submit()
 }
+
+function forPrint(e){
+    searchElement(e,'.print').innerHTML = e.tagName === 'SELECT' ? e.options[e.selectedIndex].text : e.value
+}
+
 function print(){
-    const print =document.getElementById('print')
+    const print =document.getElementById('print').cloneNode(true)
+    print.querySelectorAll('.print').forEach(function (item){
+        item.classList.remove('visually-hidden')
+    })
+    print.querySelectorAll('.noPrint').forEach(function (item){
+        item.remove()
+    })
     CallPrint(print.innerHTML)
 }
 // Сегодняшняя дата для печати
@@ -277,7 +220,7 @@ function nowDate(){
 }
 //Инициализация
 function init() {
-    const tds = document.querySelectorAll('td')
+    const tds = document.querySelectorAll('form')
     const form = document.getElementById('createOrderForm')
     tds.forEach(function(item) {
         item.addEventListener('click', (e) => {
@@ -286,8 +229,7 @@ function init() {
             }
             if(e.target && e.target.matches('.remove')) {
                 duplicateRemoveHandler(e.target)
-                tableWorkHandler()
-                tableMaterialHandler()
+                calcAmount()
             }
             if(e.target && e.target.matches('.car-create')) {
                 carCreateHandler(e.target)
@@ -297,25 +239,41 @@ function init() {
             if(e.target && e.target.matches('select[name="customer"]')) {
                 clientHandler(e.target)
                 visuallyHandler(e.target)
-                tableClientHandler()
+                searchElement(e.target, '.state').innerHTML = ''
+                forPrint(e.target)
             }
             if(e.target && e.target.matches('select[name="work[]"]')) {
                 workHandler(e.target)
                 visuallyHandler(e.target)
-                tableWorkHandler()
-            }
-            if(e.target && e.target.matches('select[name="car"]')) {
-                tableClientHandler()
+                const price = e.target.options[e.target.selectedIndex].dataset.price
+                searchElement(e.target,'.priceWork').innerHTML = price ? price: ''
+                calcAmount()
+                forPrint(e.target)
             }
             if(e.target && e.target.matches('select[name="worker[]"]')) {
-                tableWorkHandler()
+                forPrint(e.target)
+            }
+            if(e.target && e.target.matches('select[name="car"]')) {
+                const car = e.target.options[e.target.selectedIndex].dataset.state
+                searchElement(e.target, '.state').innerHTML = car ? car : ''
+                forPrint(e.target)
             }
             if(e.target && e.target.matches('select[name="material[]"]')) {
                 checkMaxHandler(e.target)
-                tableMaterialHandler()
+                const price = e.target.options[e.target.selectedIndex].dataset.price
+                const count = searchElement(e.target,'input[name="count[]"]').value
+                searchElement(e.target,'.priceMat').innerHTML = price ? price: ''
+                searchElement(e.target,'.amountMat').innerHTML = price ? parseInt(price) * parseInt(count) : ''
+                calcAmount()
+                forPrint(e.target)
             }
             if(e.target && e.target.matches('input[name="count[]"]')) {
-                tableMaterialHandler()
+                const material = searchElement(e.target,'select[name="material[]"]')
+                const price = material.options[material.selectedIndex].dataset.price
+                const count = e.target.value
+                searchElement(e.target,'.amountMat').innerHTML = price ? parseInt(price) * parseInt(count) : ''
+                calcAmount()
+                forPrint(e.target)
             }
 
         })

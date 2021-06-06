@@ -17,14 +17,14 @@
             <div class="float-start">
                 <h2>Материалы
                     @can('material-print')
-                        <button class="btn" onclick="print()"><img class="icon-sm" src="{{asset('image/print.svg')}}" alt="Распечатать"></button>
+                        <button class="btn" onclick="print()" title="Распечатать"><img class="icon-sm" src="{{asset('image/print.svg')}}" title="Распечатать" alt="Распечатать"></button>
                     @endcan
                 </h2>
             </div>
             <div class="float-end">
                 <div class="input-group">
                     <input class="form-control" type="search" placeholder="Поиск">
-                    <button id="btnSearch" class="input-group-text"><img src="{{asset('image/search.svg')}}" alt="Найти" class="icon-sm"></button>
+                    <button id="btnSearch" class="input-group-text" title="Найти"><img src="{{asset('image/search.svg')}}" title="Найти" alt="Найти" class="icon-sm"></button>
                 </div>
             </div>
         </div>
@@ -73,7 +73,7 @@
                     {{Form::submit('&#10003;',array('class'=>'btn btn-primary'))}}
                     @can('material-delete')
                         <button class="btn btn-danger material-delete" type="button" data-toggle="modal"
-                                data-target="#deleteMaterial">&times;
+                                data-target="#deleteMaterial" title="Удалить материал">&times;
                         </button>
                     @endcan
                 </td>
@@ -133,7 +133,7 @@
                         {{Form::submit('&#10003;',array('class'=>'btn btn-primary'))}}
                         @can('material-delete')
                             <button class="btn btn-danger material-delete" type="button" data-toggle="modal"
-                                    data-target="#deleteMaterial">&times;
+                                    data-target="#deleteMaterial" title="Удалить материал">&times;
                             </button>
                         @endcan
                     </td>
