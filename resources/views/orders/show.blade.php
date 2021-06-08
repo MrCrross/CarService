@@ -4,7 +4,7 @@
     @can('order-print')<a onclick="print()" class="btn" title="Распечатать"><img class="icon-sm" src="{{asset('image/print.svg')}}" title="Распечатать" alt="Распечатать"></a>@endcan
     <div id="print">
         <table class="table table-bordered caption-top">
-            <caption class="text-center">(КОПИЯ) Заказ-наряд №
+            <caption class="text-center">Заказ-наряд №
                 <span class="border-bottom text-center px-4">{{$order[0]->id}}</span>
             </caption>
             <thead>

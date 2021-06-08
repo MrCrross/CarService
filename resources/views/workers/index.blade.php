@@ -37,7 +37,6 @@
                         </button>
                     @endcan
                 </div>
-
             </div>
         </div>
     </div>

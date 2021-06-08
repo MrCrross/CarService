@@ -11,9 +11,9 @@ use App\Models\Order;
 use App\Models\OrderComposition;
 use App\Models\OrderMaterial;
 use App\Models\Work;
+use App\Models\Worker;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Permission;
 
 class OrderController extends Controller
 {
@@ -23,7 +23,7 @@ class OrderController extends Controller
     function __construct()
     {
         date_default_timezone_set ('Asia/Irkutsk');
-        $this->middleware('permission:order-list', ['only' => ['index','show']]);
+        $this->middleware('permission:order-list', ['only' => ['index','show','view','getView']]);
         $this->middleware('permission:order-edit', ['only' => ['calc','getCalc','search']]);
         $this->middleware('permission:order-create', ['only' => ['create']]);
         $this->middleware('permission:order-delete', ['only' => ['destroy']]);
@@ -45,6 +45,60 @@ class OrderController extends Controller
         return view('orders.calc',['min'=>$min,'max'=>$max]);
     }
 
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function view(){
+        $min=Order::min('registration');
+        $max=Order::max('registration');
+        $last=Order::max('id');
+        $customers = Customer::all();
+        $works = Work::all();
+        $workers = Worker::all();
+        return view('orders.view',[
+            'min'=>$min,
+            'max'=>$max,
+            'last'=>$last,
+            'workers'=>$workers,
+            'works'=>$works,
+            'customers'=>$customers
+        ]);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getView(Request $request){
+        $order = new Order();
+        $order= $order->with('car.customer','car.model.firm','compositions.worker.post','compositions.work','materials.material');
+        if(isset($request->id)){
+            $order= $order->where('id',$request->id);
+        }
+        if(isset($request->worker)){
+            $order= $order->whereHas('compositions.worker',function($query) use ($request){
+                $query->where('id',$request->worker);
+            });
+        }
+        if(isset($request->work)){
+            $order= $order->whereHas('compositions.work',function($query) use ($request){
+                $query->where('id',$request->work);
+            });
+        }
+        if(isset($request->customer)){
+            $order= $order->whereHas('car.customer',function($query) use ($request){
+                $query->where('id',$request->customer);
+            });
+        }
+        if(isset($request->start)){
+            $order= $order->where('registration','>=',$request->start);
+        }
+        if(isset($request->end)){
+            $order= $order->where('registration','<=',$request->end);
+        }
+        $order=$order->get();
+        return response()->json($order);
+    }
     /**
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse

@@ -3,13 +3,32 @@
 <div class="row">
     <div class="col-lg-12 margin-tb">
         <div class="float-start">
-            <h2>Форма Заказ-наряд
+            <h2>
+                Форма Заказ-наряд
                 @can('order-print')<a onclick="print()" class="btn" title="Распечатать"><img class="icon-sm" src="{{asset('image/print.svg')}}" title="Распечатать" alt="Распечатать"></a>@endcan
             </h2>
             <div id="result" class="alert visually-hidden"></div>
         </div>
+        <div class="float-end">
+            <a class="btn btn-outline-primary" href="{{ route('orders.view') }}">История</a>
+        </div>
     </div>
 </div>
+<datalist id="customers">
+    @foreach ($customers as $customer)
+        <option data-value="{{$customer->id}}" value="{{$customer->last_name." ".$customer->first_name." ".$customer->father_name}}" >
+    @endforeach
+</datalist>
+<datalist id="works">
+    @foreach ($works as $work)
+        <option data-value="{{$work->id}}" data-price="{{$work->price}}" value="{{$work->name}}">
+    @endforeach
+</datalist>
+<datalist id="materials">
+    @foreach ($materials as $material)
+        <option data-value="{{$material->id}}" data-price="{{$material->price}}" data-count="{{$material->count}}" value="{{$material->name}}">
+    @endforeach
+</datalist>
 <div id="print">
     {{ Form::open(array('action' => 'App\Http\Controllers\OrderController@create','method'=>'post','id'=>'createOrderForm')) }}
     <table id="t-date" class="table table-bordered caption-top">
@@ -45,12 +64,8 @@
                 <td class="num">1</td>
                 <td class="name">
                     <div class="input-group noPrint">
-                        <select name="customer" class="form-select" required>
-                            <option value="" selected>Выберите клиента</option>
-                            @foreach ($customers as $customer)
-                                <option value="{{$customer->id}}">{{$customer->last_name." ".$customer->first_name." ".$customer->father_name}}</option>
-                            @endforeach
-                        </select>
+                        <input name="customer" type="text" class="formData visually-hidden">
+                        <input list="customers" class="form-select" required>
                         @can('customer-create')
                             <span class=" customer-create" data-toggle="modal" data-target="#createCustomer" title="Добавить клиента"><img class="icon mt-2 ms-1" src="{{asset('image/user-plus.svg')}}" title="Добавить клиента" alt="Добавить клиента"></span>
                         @endcan
@@ -84,12 +99,8 @@
             <tr class="clone visually-hidden">
                 <td class="num"></td>
                 <td class="work">
-                    <select name="work[]" class="form-select noPrint">
-                        <option value="" selected>Выберите работу</option>
-                        @foreach ($works as $work)
-                            <option value="{{$work->id}}" data-price="{{$work->price}}">{{$work->name}}</option>
-                        @endforeach
-                    </select>
+                    <input type="text" class="formData inWork visually-hidden">
+                    <input list="works" class="form-select noPrint">
                     <p class="print visually-hidden"></p>
                 </td>
                 <td class="worker">
@@ -107,17 +118,13 @@
             <tr>
                 <td class="num">1</td>
                 <td class="work">
-                    <select name="work[]" class="form-select noPrint" required>
-                        <option value="" selected>Выберите работу</option>
-                        @foreach ($works as $work)
-                            <option value="{{$work->id}}" data-price="{{$work->price}}">{{$work->name}}</option>
-                        @endforeach
-                    </select>
+                    <input name="work[]" type="text" class="formData visually-hidden">
+                    <input list="works" class="form-select noPrint" required>
                     <p class="print visually-hidden"></p>
                 </td>
                 <td class="worker">
                     <div class="input-group v-h visually-hidden noPrint">
-                        <select name="worker[]" class="form-select" required>
+                        <select name="worker[]" class="form-select">
                         </select>
                     </div>
                     <p class="print visually-hidden"></p>
@@ -147,12 +154,8 @@
                 <td class="num"></td>
                 <td class="name">
                     <div class="input-group noPrint">
-                        <select name="material[]" class="form-select">
-                            <option value="" selected>Выберите материал</option>
-                            @foreach ($materials as $material)
-                                <option value="{{$material->id}}" data-price="{{$material->price}}" data-count="{{$material->count}}">{{$material->name}}</option>
-                            @endforeach
-                        </select>
+                        <input type="text" class="formData inMat visually-hidden">
+                        <input list="materials" class="form-select">
                         @can('material-create')
                             <span class="material-create noPrint" data-toggle="modal" data-target="#createMaterial"><img class="icon mt-2 ms-1" src="{{asset('image/wrench.svg')}}" alt="Добавить работу"></span>
                         @endcan
@@ -171,12 +174,8 @@
                 <td class="num">1</td>
                 <td class="name">
                     <div class="input-group noPrint">
-                        <select name="material[]" class="form-select" required>
-                            <option value="" selected>Выберите материал</option>
-                            @foreach ($materials as $material)
-                                <option value="{{$material->id}}" data-price="{{$material->price}}" data-count="{{$material->count}}">{{$material->name}}</option>
-                            @endforeach
-                        </select>
+                        <input name="material[]" type="text" class="formData visually-hidden">
+                        <input list="materials" class="form-select" required>
                         @can('material-create')
                             <span class="material-create noPrint" data-toggle="modal" data-target="#createMaterial"><img class="icon mt-2 ms-1" src="{{asset('image/wrench.svg')}}" alt="Добавить работу"></span>
                         @endcan

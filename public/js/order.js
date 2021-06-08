@@ -16,20 +16,22 @@ function searchParentByTag(actual,needed){
 }
 // Обработчик клонирование объектов
 function duplicateHandler(item) {
-    console.log(document.querySelector('input[name="customer"]').value)
-    console.log(document.querySelector('input[name="customer"]').innerHTML)
     const tbody = searchElement(item,'tbody')
     const newObj = tbody.querySelector('.clone').cloneNode(true)
-    const work =newObj.querySelector('select[name="work[]"]')
+    const work =newObj.querySelector('input[name="work[]"]')
     const worker =newObj.querySelector('select[name="worker[]"]')
-    const material = newObj.querySelector('select[name="material[]"]')
+    const material = newObj.querySelector('input[name="material[]"]')
     const count = newObj.querySelector('input[name="count"]')
+    const inMat = newObj.querySelector('input.inMat')
+    const inWork = newObj.querySelector('input.inWork')
     newObj.className=''
     newObj.querySelector('.num').innerHTML=parseInt(tbody.querySelectorAll('tr')[tbody.querySelectorAll('tr').length-1].querySelector('.num').innerHTML)+1
     if(work){work.required=true}
     if(worker){worker.required=true}
     if(material){material.required=true}
     if(count){count.required=true}
+    if(inMat){inMat.setAttribute('name','material[]')}
+    if(inWork){inWork.setAttribute('name','work[]')}
     tbody.append(newObj)
 }
 
@@ -55,9 +57,9 @@ function visuallyHandler(item) {
 
 //Заполнение select'а car
 function clientHandler(item){
-    const id = item.value
+    const id = document.querySelector('#'+item.getAttribute('list')+' option[value="'+item.value+'"]')
     const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-    if(id!==''){
+    if(id){
         fetch("/orders/cars", {
             headers: {
                 "Content-Type": "application/json",
@@ -68,7 +70,7 @@ function clientHandler(item){
             method: "post",
             credentials: "same-origin",
             body: JSON.stringify({
-                id: id
+                id: id.dataset.value
             })
         })
             .then(res=>res.json())
@@ -99,9 +101,9 @@ function clientHandler(item){
 
 //Заполнение select'а worker[]
 function workHandler(item){
-    const id = item.value
+    const id = document.querySelector('#'+item.getAttribute('list')+' option[value="'+item.value+'"]')
     const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-    if(id!==''){
+    if(id){
         fetch("/orders/workers", {
             headers: {
                 "Content-Type": "application/json",
@@ -112,7 +114,7 @@ function workHandler(item){
             method: "post",
             credentials: "same-origin",
             body: JSON.stringify({
-                id: id
+                id: id.dataset.value
             })
         })
             .then(res=>res.json())
@@ -143,21 +145,20 @@ function workHandler(item){
 }
 //Заполнение максимального количество материала
 function checkMaxHandler(item){
-    const id = item.value
-    if(id!==''){
-        const max = item.options[item.selectedIndex].dataset.count
+    const id = document.querySelector('#'+item.getAttribute('list')+' option[value="'+item.value+'"]')
+    if(id){
+        const max = document.querySelector('#'+item.getAttribute('list')+' option[value="'+item.value+'"]').dataset.count
         const inputCount = searchParentByTag(item,'tr').querySelector('input[name="count[]"]')
         inputCount.setAttribute('max',max)
     }
 }
-
 //Добавление данных клиента в модальное окно нового автомобиля
 function carCreateHandler(item){
-    const customer =searchElement(item,'select[name="customer"]')
-    const nameCustomer =customer.options[customer.selectedIndex].text
+    const customer =searchElement(item,'input[name="customer"]')
+    const nameCustomer =customer.value
     const form = document.getElementById('formCreateCar')
     const input = form.querySelector('input[name="nameCustomer"]')
-    input.dataset.id = customer.value
+    input.dataset.id = document.querySelector('#'+customer.getAttribute('list')+' option[value="'+customer.value+'"]').dataset.value
     input.value = nameCustomer
 }
 
@@ -197,7 +198,11 @@ function submitHandler(e){
 }
 
 function forPrint(e){
-    searchElement(e,'.print').innerHTML = e.tagName === 'SELECT' ? e.options[e.selectedIndex].text : e.value
+    searchElement(e,'.print').innerHTML = e.value
+}
+function forForm(e){
+    const elem = document.querySelector('#'+e.getAttribute('list')+' option[value="'+e.value+'"]')
+    searchElement(e,'.formData').value = elem? elem.dataset.value: ''
 }
 
 function print(){
@@ -236,19 +241,21 @@ function init() {
             }
         })
         item.addEventListener('change',(e)=>{
-            if(e.target && e.target.matches('select[name="customer"]')) {
+            if(e.target && e.target.matches('input[list="customers"]')) {
                 clientHandler(e.target)
                 visuallyHandler(e.target)
                 searchElement(e.target, '.state').innerHTML = ''
                 forPrint(e.target)
+                forForm(e.target)
             }
-            if(e.target && e.target.matches('select[name="work[]"]')) {
+            if(e.target && e.target.matches('input[list="works"]')) {
                 workHandler(e.target)
                 visuallyHandler(e.target)
-                const price = e.target.options[e.target.selectedIndex].dataset.price
-                searchElement(e.target,'.priceWork').innerHTML = price ? price: ''
+                const price = document.querySelector('#'+e.target.getAttribute('list')+' option[value="'+e.target.value+'"]')
+                searchElement(e.target,'.priceWork').innerHTML = price ? price.dataset.price: ''
                 calcAmount()
                 forPrint(e.target)
+                forForm(e.target)
             }
             if(e.target && e.target.matches('select[name="worker[]"]')) {
                 forPrint(e.target)
@@ -258,20 +265,22 @@ function init() {
                 searchElement(e.target, '.state').innerHTML = car ? car : ''
                 forPrint(e.target)
             }
-            if(e.target && e.target.matches('select[name="material[]"]')) {
+            if(e.target && e.target.matches('input[list="materials"]')) {
                 checkMaxHandler(e.target)
-                const price = e.target.options[e.target.selectedIndex].dataset.price
+                const price = document.querySelector('#'+e.target.getAttribute('list')+' option[value="'+e.target.value+'"]')
                 const count = searchElement(e.target,'input[name="count[]"]').value
-                searchElement(e.target,'.priceMat').innerHTML = price ? price: ''
-                searchElement(e.target,'.amountMat').innerHTML = price ? parseInt(price) * parseInt(count) : ''
+                searchElement(e.target,'.priceMat').innerHTML = price ? price.dataset.price: ''
+                searchElement(e.target,'.amountMat').innerHTML = price ? parseInt(price.dataset.price) * parseInt(count) : ''
                 calcAmount()
                 forPrint(e.target)
+                forForm(e.target)
+
             }
             if(e.target && e.target.matches('input[name="count[]"]')) {
-                const material = searchElement(e.target,'select[name="material[]"]')
-                const price = material.options[material.selectedIndex].dataset.price
+                const material = searchElement(e.target,'input[list="materials"]')
+                const price = document.querySelector('#'+material.getAttribute('list')+' option[value="'+material.value+'"]')
                 const count = e.target.value
-                searchElement(e.target,'.amountMat').innerHTML = price ? parseInt(price) * parseInt(count) : ''
+                searchElement(e.target,'.amountMat').innerHTML = price ? parseInt(price.dataset.price) * parseInt(count) : ''
                 calcAmount()
                 forPrint(e.target)
             }

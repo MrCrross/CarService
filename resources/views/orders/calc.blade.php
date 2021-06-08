@@ -3,7 +3,7 @@
 <div class="row">
     <div class="col-lg-12 ">
         <div class="float-start">
-            <h2>Заказ-наряды
+            <h2>Доходы
                 @can('order-print')<a onclick="print()" class="btn" title="Распечатать"><img class="icon-sm" src="{{asset('image/print.svg')}}" title="Распечатать" alt="Распечатать"></a>@endcan
             </h2>
         </div>

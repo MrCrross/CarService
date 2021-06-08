@@ -37,6 +37,8 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get('orders', [OrderController::class, 'index'])->name('orders.index');
         Route::post('orders', [OrderController::class, 'create']);
         Route::get('orders/{id}', [OrderController::class, 'show'])->name('orders.show');
+        Route::get('order/view', [OrderController::class, 'view'])->name('orders.view');
+        Route::post('order/view', [OrderController::class, 'getView']);
 
         Route::group(['middleware'=>['permission:order-edit']],function(){
             Route::get('order/calc', [OrderController::class, 'calc'])->name('orders.calc');
