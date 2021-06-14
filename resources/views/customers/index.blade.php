@@ -91,7 +91,7 @@
                     <div class="input-group visually-hidden">
                         <select class="form-select" name="model[]">
                         </select>
-                        <input class="form-control" name="state[]" type="text"  value="" pattern="[АВЕКМНОРСТУХ]{1}[0-9]{3}[АВЕКМНОРСТУХ]{2}[0-9]{2}" placeholder="Госномер">
+                        <input class="form-control" name="state[]" type="text"  value="" pattern="[АВЕКМНОРСТУХ]{1}[0-9]{3}[АВЕКМНОРСТУХ]{2}[0-9]{3}" placeholder="Госномер">
                         {{Form::submit('&#10003;',array('class'=>'input-group-text btn btn-primary model'))}}
                     </div>
                 @endcan
@@ -129,7 +129,7 @@
                         <option value="{{$model->id}}">{{$model->firm->name.' '.$model->name.' '.$model->year_release}}</option>
                     @endforeach
                 </select>
-                <input class="form-control" name="state" type="text"  value="" pattern="[АВЕКМНОРСТУХ]{1}[0-9]{3}[АВЕКМНОРСТУХ]{2}[0-9]{2}" placeholder="Госномер">
+                <input class="form-control" name="state" type="text"  value="" pattern="[АВЕКМНОРСТУХ]{1}[0-9]{3}[АВЕКМНОРСТУХ]{2}[0-9]{3}" placeholder="Госномер">
             </div>
         </td>
         <td>
@@ -194,7 +194,7 @@
                                     @endif
                                 @endforeach
                             </select>
-                            <input class="form-control" name="state[]" type="text"  value="{{$car->state_number}}" pattern="[АВЕКМНОРСТУХ]{1}[0-9]{3}[АВЕКМНОРСТУХ]{2}[0-9]{2}" placeholder="Госномер">
+                            <input class="form-control" name="state[]" type="text"  value="{{$car->state_number}}" pattern="[АВЕКМНОРСТУХ]{1}[0-9]{3}[АВЕКМНОРСТУХ]{2}[0-9]{3}" placeholder="Госномер">
                             {{Form::submit('&#10003;',array('class'=>'input-group-text btn btn-primary model'))}}
                         </div>
                     @endcan

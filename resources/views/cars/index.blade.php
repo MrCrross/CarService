@@ -73,7 +73,7 @@
             </div>
         </td>
         <td>
-            <input class="form-control" name="state" type="text" pattern="[АВЕКМНОРСТУХ]{1}[0-9]{3}[АВЕКМНОРСТУХ]{2}[0-9]{2}" placeholder="Введите гос номер (С189АН78)" required>
+            <input class="form-control" name="state" type="text" pattern="[АВЕКМНОРСТУХ]{1}[0-9]{3}[АВЕКМНОРСТУХ]{2}[0-9]{3}" placeholder="Введите гос номер (С189АН78)" required>
         </td>
         <td>
             {{Form::submit('&#10003;',array('class'=>'btn btn-primary'))}}
@@ -139,7 +139,7 @@
             @can('customer-edit')
             <span class="car-edit" title="Редактировать госномер">&#128393;</span>
             <div class="input-group visually-hidden">
-                <input class="form-control" name="state" type="text"  value="{{ $car->state_number }}" pattern="[АВЕКМНОРСТУХ]{1}[0-9]{3}[АВЕКМНОРСТУХ]{2}[0-9]{2}">
+                <input class="form-control" name="state" type="text"  value="{{ $car->state_number }}" pattern="[АВЕКМНОРСТУХ]{1}[0-9]{3}[АВЕКМНОРСТУХ]{2}[0-9]{3}">
                 {{Form::submit('&#10003;',array('class'=>'input-group-text btn btn-primary'))}}
             </div>
             @endcan</td>

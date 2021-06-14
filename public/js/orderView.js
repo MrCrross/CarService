@@ -24,8 +24,7 @@ function getView(e){
     })
         .then(res=>res.json())
         .then((res)=>{
-            console.log(res)
-            const content =document.getElementById('content')
+            const content =document.querySelector('.content')
             const rows = content.querySelectorAll('.row')
             if(rows){
                 rows.forEach(function (item){
@@ -40,7 +39,7 @@ function getView(e){
 
 //Обновление данных страницы
 function reloadContent(item){
-    const content = document.getElementById('content')
+    const content = document.querySelector('.content')
     const template = document.getElementById('clone').cloneNode(true)
     const numOrder = template.querySelector('.numOrder')
     const reg = template.querySelector('.dateReg')
@@ -99,6 +98,11 @@ function reloadContent(item){
     totalM.innerHTML=tM
     total.innerHTML=tM+tW
     content.append(template)
+}
+
+function print(){
+    const print =document.querySelector('.content').cloneNode(true)
+    CallPrint(print.innerHTML)
 }
 
 function init(){

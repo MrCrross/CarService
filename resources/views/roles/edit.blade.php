@@ -40,7 +40,7 @@
             <br/>
             @foreach($permission as $value)
                 <label>{{ Form::checkbox('permission[]', $value->id, in_array($value->id, $rolePermissions) ? true : false, array('class' => 'name')) }}
-                {{ $value->name }}</label>
+                {{ $value->name_rus }}</label>
             <br/>
             @endforeach
         </div>

@@ -69,7 +69,7 @@
                                     <input class="form-control" type="text" name='model_year' placeholder="Введите год выпуска автомобиля" pattern="[0-9]{4}">
                                     <span class="visModel" title="Выбрать модель"><img class="icon" src="{{asset('image/back.svg')}}" title="Выбрать модель" alt="Выбрать модель" ></span>
                                 </div>
-                                <input class="form-control" name="state" type="text"  value="" pattern="[АВЕКМНОРСТУХ]{1}[0-9]{3}[АВЕКМНОРСТУХ]{2}[0-9]{2}" placeholder="Госномер" required>
+                                <input class="form-control" name="state" type="text"  value="" pattern="[АВЕКМНОРСТУХ]{1}[0-9]{3}[АВЕКМНОРСТУХ]{2}[0-9]{3}" placeholder="Госномер" required>
                             </td>
                         </tr>
                         </tbody>
@@ -142,7 +142,7 @@
                                         <input class="form-control" type="text" name='model_year' placeholder="Введите год выпуска автомобиля" pattern="[0-9]{4}">
                                         <span class="visModel" title="Выбрать модель"><img class="icon" src="{{asset('image/back.svg')}}" title="Выбрать модель" alt="Выбрать модель" ></span>
                                     </div>
-                                    <input class="form-control" name="state" type="text"  value="" pattern="[АВЕКМНОРСТУХ]{1}[0-9]{3}[АВЕКМНОРСТУХ]{2}[0-9]{2}" placeholder="Госномер" required>
+                                    <input class="form-control" name="state" type="text"  value="" pattern="[АВЕКМНОРСТУХ]{1}[0-9]{3}[АВЕКМНОРСТУХ]{2}[0-9]{3}" placeholder="Госномер" required>
                                 </td>
                             </tr>
                             </tbody>

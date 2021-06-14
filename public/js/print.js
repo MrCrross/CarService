@@ -15,7 +15,7 @@ function CallPrint(data) {
         if (WinPrint.document.readyState ==='complete')
         {
             WinPrint.print()
-            WinPrint.close()
+            // WinPrint.close()
         } else{
             setTimeout(check,100)
         }

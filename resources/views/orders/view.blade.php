@@ -61,7 +61,6 @@
     {{Form::close()}}
 </div>
 <div id="clone" class="visually-hidden">
-<div class="row">
         <table class="table table-bordered caption-top">
             <caption class="text-center">Заказ-наряд №
                 <span class="border-bottom text-center px-4 numOrder"></span>
@@ -155,8 +154,7 @@
             </tfoot>
         </table>
     </div>
-</div>
-<div id="content">
+<div class="content">
 
 </div>
 
