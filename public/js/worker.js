@@ -47,7 +47,7 @@ function editWorkHandler(item) {
 }
 //Data in download modal
 function downloadHandler(item) {
-    const url = item.dataset.contract
+    const url = item.parentNode.dataset.contract
     const form = document.querySelector('#downloadForm')
     const contract = form.querySelector('input[name="contract"]')
     contract.value=url

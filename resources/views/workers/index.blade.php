@@ -26,15 +26,8 @@
                 <div class="input-group">
                     <input class="form-control" type="search" placeholder="Поиск">
                     <button id="btnSearch" class="input-group-text" title="Найти"><img src="{{asset('image/search.svg')}}" title="Найти" alt="Найти" class="icon-sm"></button>
-                    @can('post-create')
-                        <button class="btn btn-success ms-2" data-toggle="modal" data-target="#addPost">Добавить должность
-                        </button>
-                    @endcan
                     @can('work-create')
-                        <button class="btn btn-success" data-toggle="modal" data-target="#addWork">Добавить работу</button>
-                        <button class="btn btn-success" data-toggle="modal" data-target="#addWorkPost">Назначить работу
-                            должности
-                        </button>
+                        <a class="btn btn-success" href="{{ route('workers.works') }}">Работы</a>
                     @endcan
                 </div>
             </div>
@@ -301,7 +294,7 @@
                                 {{$contract->post_change}}
                                 @can('contract-edit')
                                     <span class="download" data-contract="{{$contract->contract}}" title="Скачать документ о переводе">
-                                        <img class="icon-sm" src="{{asset('image/download.svg')}}" title="Скачать документ о переводе" alt="Скачать документ о переводе">
+                                        <img class="icon-sm download" src="{{asset('image/download.svg')}}" title="Скачать документ о переводе" alt="Скачать документ о переводе">
                                     </span>
                                 @endcan
                             </div>

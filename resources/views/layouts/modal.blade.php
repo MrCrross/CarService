@@ -69,7 +69,7 @@
                                     <input class="form-control" type="text" name='model_year' placeholder="Введите год выпуска автомобиля" pattern="[0-9]{4}">
                                     <span class="visModel" title="Выбрать модель"><img class="icon" src="{{asset('image/back.svg')}}" title="Выбрать модель" alt="Выбрать модель" ></span>
                                 </div>
-                                <input class="form-control" name="state" type="text"  value="" pattern="[АВЕКМНОРСТУХ]{1}[0-9]{3}[АВЕКМНОРСТУХ]{2}[0-9]{3}" placeholder="Госномер" required>
+                                <input class="form-control" name="state" type="text"  value="" pattern="[АВЕКМНОРСТУХ]{1}[0-9]{3}[АВЕКМНОРСТУХ]{2}[0-9]{2-3}" placeholder="Госномер" required>
                             </td>
                         </tr>
                         </tbody>
@@ -142,7 +142,7 @@
                                         <input class="form-control" type="text" name='model_year' placeholder="Введите год выпуска автомобиля" pattern="[0-9]{4}">
                                         <span class="visModel" title="Выбрать модель"><img class="icon" src="{{asset('image/back.svg')}}" title="Выбрать модель" alt="Выбрать модель" ></span>
                                     </div>
-                                    <input class="form-control" name="state" type="text"  value="" pattern="[АВЕКМНОРСТУХ]{1}[0-9]{3}[АВЕКМНОРСТУХ]{2}[0-9]{3}" placeholder="Госномер" required>
+                                    <input class="form-control" name="state" type="text"  value="" pattern="[АВЕКМНОРСТУХ]{1}[0-9]{3}[АВЕКМНОРСТУХ]{2}[0-9]{2-3}" placeholder="Госномер" required>
                                 </td>
                             </tr>
                             </tbody>
@@ -591,7 +591,7 @@
                     <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close" title="Закрыть окно"></button>
                 </div>
                 <div class="modal-body">
-                    {{ Form::open(array('action' => 'App\Http\Controllers\WorkController@updateWorkPost','method'=>'patch','id'=>'work-edit')) }}
+                    {{ Form::open(array('action' => 'App\Http\Controllers\WorkController@update','method'=>'patch','id'=>'work-edit')) }}
                     <input class="visually-hidden" name="id" readonly>
                     <table class="table table-bordered table-hover">
                         <thead>

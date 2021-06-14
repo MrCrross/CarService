@@ -33,6 +33,7 @@ class WorkController extends Controller
      */
     public function createWorkPost(Request $request)
     {
+
         try{
             WorkHasPost::where('post_id',$request->post_id)->delete();
             if(isset($request->works)){
@@ -43,10 +44,14 @@ class WorkController extends Controller
                     ]);
                 }
             }
+            $posts = Post::with('works.work')->get()->toArray();
+            $works = Work::all();
+            return view('workers.works', ['posts' => $posts,'works'=>$works,'success'=>'Данные добавлены успешно']);
         }catch(QueryException $e){
-            return  WorkerController::answer('error','Ошибка. Введенные данные некорректные');
+            $posts = Post::with('works.work')->get()->toArray();
+            $works = Work::all();
+            return view('workers.works', ['posts' => $posts,'works'=>$works,'error'=>'Ошибка. Введенные данные некорректные']);
         }
-        return  WorkerController::answer('success','Данные добавлены успешно');
     }
 
     /**
@@ -57,10 +62,15 @@ class WorkController extends Controller
     {
         try{
             Work::create($request->all());
+            $posts = Post::with('works.work')->get()->toArray();
+            $works = Work::all();
+            return view('workers.works', ['posts' => $posts,'works'=>$works,'success'=>'Данные добавлены успешно']);
         }catch(QueryException $e){
-            return  WorkerController::answer('error','Ошибка. Введенные данные некорректные');
+            $posts = Post::with('works.work')->get()->toArray();
+            $works = Work::all();
+            return view('workers.works', ['posts' => $posts,'works'=>$works,'error'=>'Ошибка. Введенные данные некорректные']);
         }
-        return WorkerController::answer('success','Данные добавлены успешно');
+
     }
 
     /**
@@ -74,10 +84,15 @@ class WorkController extends Controller
                 'name'=>$request->name,
                 'price'=>$request->price
             ]);
+            $posts = Post::with('works.work')->get()->toArray();
+            $works = Work::all();
+            return view('workers.works', ['posts' => $posts,'works'=>$works,'success'=>'Данные добавлены успешно']);
         }catch(QueryException $e){
-            return  WorkerController::answer('error','Ошибка. Введенные данные некорректные');
+            $posts = Post::with('works.work')->get()->toArray();
+            $works = Work::all();
+            return view('workers.works', ['posts' => $posts,'works'=>$works,'error'=>'Ошибка. Введенные данные некорректные']);
         }
-        return WorkerController::answer('success','Данные обновлены успешно');
+
     }
 
     /**
@@ -88,16 +103,23 @@ class WorkController extends Controller
     {
         try{
             WorkHasPost::where('post_id',$request->id)->delete();
-            foreach ($request->works as $work){
-                WorkHasPost::create([
-                    'post_id'=>$request->id,
-                    'work_id'=>$work
-                ]);
+            if($request->works){
+                foreach ($request->works as $work){
+                    WorkHasPost::create([
+                        'post_id'=>$request->id,
+                        'work_id'=>$work
+                    ]);
+                }
             }
+            $posts = Post::with('works.work')->get()->toArray();
+            $works = Work::all();
+            return view('workers.works', ['posts' => $posts,'works'=>$works,'success'=>'Данные добавлены успешно']);
         }catch(QueryException $e){
-            return  WorkerController::answer('error','Ошибка. Введенные данные некорректные '.$e);
+            $posts = Post::with('works.work')->get()->toArray();
+            $works = Work::all();
+            return view('workers.works', ['posts' => $posts,'works'=>$works,'error'=>'Ошибка. Введенные данные некорректные'.$e]);
         }
-        return WorkerController::answer('success','Данные обновлены успешно');
+
     }
 
     /**
@@ -106,12 +128,18 @@ class WorkController extends Controller
      */
     public function destroy(Request $request)
     {
+
         try {
             Work::where('id', $request->id)->delete();
-        } catch (QueryException $e) {
-            return  WorkerController::answer('error','Ошибка. Введенные данные некорректные');
+            $posts = Post::with('works.work')->get()->toArray();
+            $works = Work::all();
+            return view('workers.works', ['posts' => $posts,'works'=>$works,'success'=>'Данные добавлены успешно']);
+        } catch(QueryException $e){
+            $posts = Post::with('works.work')->get()->toArray();
+            $works = Work::all();
+            return view('workers.works', ['posts' => $posts,'works'=>$works,'error'=>'Ошибка. Введенные данные некорректные'.$e]);
         }
-        return WorkerController::answer('success','Данные обновлены успешно');
+
     }
 
     /**

@@ -154,10 +154,13 @@ function checkMaxHandler(item){
 }
 //Добавление данных клиента в модальное окно нового автомобиля
 function carCreateHandler(item){
-    const customer =searchElement(item,'input[name="customer"]')
+    const customer =searchElement(item,'input[list="customers"]')
     const nameCustomer =customer.value
     const form = document.getElementById('formCreateCar')
     const input = form.querySelector('input[name="nameCustomer"]')
+    console.log(customer)
+    console.log(nameCustomer)
+    console.log(input)
     input.dataset.id = document.querySelector('#'+customer.getAttribute('list')+' option[value="'+customer.value+'"]').dataset.value
     input.value = nameCustomer
 }
