@@ -18,6 +18,10 @@ class LoginController extends Controller
     | to conveniently provide its functionality to your applications.
     |
     */
+    public function username(): string
+    {
+        return 'name';
+    }
 
     use AuthenticatesUsers;
 
